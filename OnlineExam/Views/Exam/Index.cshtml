@@ -1,0 +1,46 @@
+﻿@model List<Exam>
+
+<div class="container p-3">
+
+    <table class="table table-dark mt-5">
+        <thead>
+            <tr>
+
+                <th scope="col">#</th>
+                <th scope="col">Course name</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.Title</td>
+                    <td>@x.ExamId</td>
+                    <td>@x.Duration</td>
+                    <td>@x.AddedAt</td>
+
+                    <td>
+                        <a asp-controller="Exam" asp-action="ViewQuestions" asp-route-Id="@x.ExamId"  class="btn btn-info">View Questions</a>
+                    </td>
+
+                    <td>
+                        <a asp-controller="Exam" asp-action="EditExam" asp-route-Id="@x.ExamId" class="btn btn-success">Edit</a>
+                    </td>
+
+                    <td>
+                        <a asp-controller="Exam" asp-action="Delete" asp-route-id="@x.ExamId" class="btn btn-danger">Delete</a>
+                    </td>
+
+
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
+    
+    <a asp-controller="Exam" asp-action="CreateExam" class="btn btn-primary">Create Exam</a>
+
+</div>

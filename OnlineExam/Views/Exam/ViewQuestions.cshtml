@@ -1,0 +1,42 @@
+﻿@model ListOfQAndExamId
+
+@{
+    ViewData["Title"] = "Questions";
+}
+
+@{
+    <h1>Exam caza caza</h1>
+    foreach(var item in Model.questions)
+    {
+        <h1>@item.Head</h1>
+
+        <h2>@item.a</h2>
+        <h2>@item.b</h2>
+        if (item.c != null)
+        {
+            <h2>@item.c</h2>
+
+        }
+        if (item.d != null)
+        {
+            <h2>@item.d</h2>
+            
+        }
+
+        <a asp-controller="Exam" asp-action="DeleteQuestion" asp-route-Id="@item.QuestionId" class="btn btn-danger">Delete</a>
+        <a asp-controller="Exam" asp-action="EditQuestion" asp-route-Id="@item.QuestionId" class="btn btn-success">Edit</a>
+
+
+        <br />
+        <br />
+
+    }
+
+    <a asp-controller="Exam" asp-action="CreateQuestion" asp-route-Id="@Model.Id" class="btn btn-info">Create Question</a>
+
+    <a asp-action="Index" asp-controller="Exam" class="btn btn-secondary">
+        back to Exams
+    </a>
+}
+
+

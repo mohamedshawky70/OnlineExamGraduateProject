@@ -1,0 +1,55 @@
+﻿@model Question
+
+<form method="post">
+
+    
+
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">
+                Add New Exam
+            </h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+
+
+            <label asp-for="Head"></label>
+            <input asp-for="Head" class="form-control" />
+
+
+
+            <label asp-for="a"></label>
+            <input asp-for="a" class="form-control" />
+            <input asp-for="IsA" class="box-shadow" type="checkbox" />
+
+            <br />
+
+            <label asp-for="b"></label>
+            <input asp-for="b" class="form-control" />
+            <input asp-for="IsB"   type="checkbox" />
+
+            <br />
+
+            <label asp-for="c"></label>
+            <input asp-for="c" class="form-control" />
+            <input asp-for="IsC"  type="checkbox" />
+
+            <br />
+
+            <label asp-for="d"></label>
+            <input asp-for="d" class="form-control" />
+            <input asp-for="IsD" type="checkbox" />
+
+            <br />
+
+            <label asp-for="ExamId"></label>
+            <input asp-for="ExamId" class="form-control" value="@Model.ExamId"/>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="ViewQuestions" asp-controller="Exam" asp-route-Id="@Model.ExamId" class="btn btn-secondary">
+            back to Questions
+        </a>
+    </div>
+</form>
