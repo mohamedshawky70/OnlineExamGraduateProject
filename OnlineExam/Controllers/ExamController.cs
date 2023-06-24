@@ -162,6 +162,7 @@ namespace OnlineExam.Controllers
             var lstOfQuestions = _context.Questions.Where(x => x.ExamId == Id).ToList();
 
             ListOfQAndExamId viewM = new ListOfQAndExamId();
+            viewM.StartTime = _context.Exams.Where(i => i.ExamId == Id).ToArray()[0].StartTime;
             viewM.questions = lstOfQuestions;
             viewM.Id = (int)Id;
             viewM.ExamName = _context.Exams.Where(i => i.ExamId == Id).ToArray()[0].Title;
@@ -263,7 +264,7 @@ namespace OnlineExam.Controllers
                     StudentId = i.StudentNationalId,
                     StudentName = i.StudentName,
                     Score = (int)i.Score,
-                    ExamName = _context.Exams.First(i => i.ExamId == i.ExamId).Title
+                    ExamName = _context.Exams.First(j => j.ExamId == i.ExamId).Title
 
                 };
 

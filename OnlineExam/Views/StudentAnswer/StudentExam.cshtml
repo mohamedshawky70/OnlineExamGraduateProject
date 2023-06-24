@@ -4,9 +4,11 @@
     ViewData["Title"] = "Exam";
     Layout = "~/Views/Shared/_StudentExamBar.cshtml";
     var currentExamIndex = Model.question.Index + 1;
+
 }
 
-<form asp-controller="StudentAnswer" asp-action="StudentExam" method="post" style="height:100%">
+<form asp-controller="StudentAnswer" asp-action="StudentExam" method="post" 
+style="height:100%" id="exam-form">
     <div class="main-container">
         <div class="exam-header">
             <p style="margin-left: 393px;"> Online MCQ Exam </p>
@@ -21,7 +23,7 @@
                 <hr style="margin-bottom: 0px;  margin-top: 0px; border-top: 2px solid;width: 100%;">
 
                 <input type="hidden" asp-for="@Model.question.AnswerId" />
-
+                
                 <div class="form-group innerQuestion-container">
                     <h3>@Model.question.Head</h3>
 
@@ -59,17 +61,18 @@
             <div class="side-bar-container">
                 <div class="timeRemaining-container">
                     <div class="hoursRemaining-container">
-                        <p>00</p>
+                        <p id="hour-remain">00</p>
                         <p>Hours</p>
                     </div>
                     <div class="hoursRemaining-container">
-                        <p>00</p>
+                        <p id="minute-remain">00</p>
                         <p>Minutes</p>
                     </div>
                     <div class="hoursRemaining-container">
-                        <p>00</p>
+                        <p id="second-remain">00</p>
                         <p>Seconds</p>
                     </div>
+                   
                 </div>
                 <div class="examName-container">
                     <p>@Model.ExamName</p>
@@ -98,7 +101,7 @@
                     }
                 </div>
                 <div style="margin-right:92px;">
-                    <button  type ="submit" name ="action" value="submit" class="custom-btn btn-2">
+                    <button  type ="submit" id="submit" name ="action" value="submit" class="custom-btn btn-2">
                         Submit
                     </button>
                 </div>
@@ -118,7 +121,30 @@
 
     </div>
 </form>
+<script>
+    const examForm = document.getElementById('exam-form');
 
+    var x = setInterval(function () {
+        var countDownDate = new Date('@Model.ExamDate.ToString()').getTime(); // Move this line here
+        // get the exam form from the page
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("hour-remain").innerHTML = hours;
+        document.getElementById("minute-remain").innerHTML = minutes;
+        document.getElementById("second-remain").innerHTML = seconds;
+
+        if (distance < 0) {
+            console.log('Submitting form...');
+            window.location.href = '@Url.Action("Submit",
+            "StudentAnswer", new { AnswerId = @Model.question.AnswerId })';
+            return;
+        }
+    }, 1000);
+</script>
 <style>
     p{
         font-family: Arial, Helvetica, sans-serif;

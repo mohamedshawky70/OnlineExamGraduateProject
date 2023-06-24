@@ -1,8 +1,10 @@
 ﻿@model StudentInfo
 
 
-<form asp-controller="StudentAnswer" asp-action="AddAnswer" method="post">
+<form asp-controller="StudentAnswer" asp-action="AddAnswer" 
+method="post" class="conatiner-container">
     <div class="container">
+
         <div class="warning-container">
             <p style="font-size: 22px;font-weight: bold;">Are you ready? there is a few of warnings.</p>
             <ul>
@@ -16,9 +18,7 @@
                     <p style="font-size: 18px;">If your internet is down during exam of any kind of these 
                     ,answers you submited so far will be submitted.</p>
                 </li>
-                <li>
-                    <p style="font-size: 18px;">You can't view the question more than 2 times.</p>
-                </li>
+               
             </ul>
         </div>
 
@@ -35,14 +35,75 @@
 
             <input asp-for="ExamId" class="form-control hidden" value="@Model.ExamId"/>
 
-            <button type="submit" class="btn btn-primary custome-btn">Join Now</button>
+            <button type="submit" class="btn btn-primary custome-btn" id="btn-join" disabled>Join Now</button>
         </div>
         
-      
+    </div>
+    <div class="timeRemaining-container" id="timeRemaining-id">
+        <div class="hoursRemaining-container">
+            <p id="hour-remain">00</p>
+            <p>Hours</p>
+        </div>
+        <div class="hoursRemaining-container">
+            <p id="minute-remain">00</p>
+            <p>Minutes</p>
+        </div>
+        <div class="hoursRemaining-container">
+            <p id="second-remain">00</p>
+            <p>Seconds</p>
+        </div>
+    </div>
+    <div id="exam-over" style="display:none;">
+        <h2>Exam is Over</h2>
+    </div>
+    <div id="exam-running" style="display:none;">
+        <h2>Exam is running</h2>
     </div>
 </form>
-
+<script>
+    const btn = document.getElementById("btn-join");
+    var x = setInterval(function () {
+        var countDownDate = new Date('@Model.StartTime.ToString()').getTime(); // Move this line here
+        // get the exam form from the page
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("hour-remain").innerHTML = hours;
+        document.getElementById("minute-remain").innerHTML = minutes;
+        document.getElementById("second-remain").innerHTML = seconds;
+        var end = new Date('@Model.EndTime.ToString()').getTime(); // Move this line here
+        var now = new Date().getTime();
+        var distance2 = now - end;
+        console.log(end);
+        if (distance2 >= 0) {
+            const myDiv = document.getElementById('timeRemaining-id');
+            myDiv.style.display = 'none';
+            document.getElementById('exam-running').style.display = 'none';
+            document.getElementById('exam-over').style.display = 'block';
+            btn.disabled = true;
+        }
+        if (now > countDownDate && now < end) {
+            const myDiv = document.getElementById('timeRemaining-id');
+            myDiv.style.display = 'none';
+            document.getElementById('exam-running').style.display = 'block';
+            document.getElementById('exam-over').style.display = 'none';
+        }
+        if (distance < 0 && distance2 < 0) {
+            btn.disabled = false;
+            return;
+        }
+        
+    }, 1000);
+</script>
 <style>
+    .conatiner-container{
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
     .container {
         display: flex;
         justify-content: center;
@@ -70,5 +131,15 @@
     
     .custome-btn{
         background: #1590A4;
+    }
+
+    .timeRemaining-container {
+        display: flex;
+        gap: 48px;
+    }
+
+    .timeRemaining-container p{
+        font-size:16px;
+        font-weight:600;
     }
 </style>

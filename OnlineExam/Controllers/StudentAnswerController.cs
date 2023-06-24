@@ -11,7 +11,6 @@ namespace OnlineExam.Controllers
 
         private readonly ApplicationDbContext _context;
 
-        //private string ConnectionString = "Server=(localdb)\\ProjectModels;Database=OnlineExam;Trusted_Connection=True;MultipleActiveResultSets=true";
 
         public StudentAnswerController(ApplicationDbContext context)
         {
