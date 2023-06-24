@@ -1,29 +1,152 @@
 ﻿@model ResultsModel
 
+@{
 
-
-<p>@Model.ExamName</p>
-<p>@Model.answers.Count</p>
-<p>@Model.passed</p>
-<p>@Model.Failed</p>
-<p>@Model.averageGrade</p>
-
-
-
-
-
-@foreach(var i in Model.answers)
-{
-    <p>@i.StudentName</p>
-    <p>@i.StudentNationalId</p>
-    <p>@i.Score</p>
-
-    <a asp-action="ExamResultDetails" asp-controller="Exam" asp-route-id="@i.AnswerId">
-
-        more Details
-
-
-    </a>
-
+    Layout = "~/Views/Shared/_StudentExamBar.cshtml";
+    var currentIndex = 0;
 }
+<div class="main-container">
+    <div class="examName-container">
+        <p>@*@Model.ExamName*@Operating System Results</p>
+    </div>
+
+    <div class="examInfo-container">
+        <div class="totalStudent-container">
+            <span><i class="fa fa-regular fa-circle-user fa-3x" style="color:#1590A4"></i></span>
+            <div class="Info-container">
+                <p>Total Student</p>
+                <p>@Model.answers.Count</p>
+            </div>
+        </div>
+        <div class="totalStudent-container">
+            <span><i class="fa fa-regular fa-circle-check fa-3x" style="color:#00A607"></i></span>
+            <div class="Info-container">
+                <p>Passed Student</p>
+                <p>@Model.numberOfPassedStudent</p>
+            </div>
+        </div>
+        <div class="totalStudent-container">
+            <span><i class="fa fa-light fa-circle-exclamation fa-3x" style="color:#E00000"></i></span>
+            <div class="Info-container">
+                <p>Failed Students</p>
+                <p>@Model.numberOfFailedStudent</p>
+            </div>
+        </div>
+        <div class="totalStudent-container" style="border-right:none">
+            <span><i class="fa fa-thin fa-bolt fa-3x" style="color:#E1DA2E"></i></span>
+            <div class="Info-container">
+                <p>Average Score</p>
+                <p>@Model.averageGrade</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="examResults-container">
+        <div class="label-container">
+            <p>Name</p>
+            <p>ID</p>
+            <p>Status</p>
+            <p>Score</p>
+            <p>Grade</p>
+            <p>Details</p>
+
+        </div>
+        @foreach (var i in Model.answers)
+        {
+            <div class="result-container">
+                <p >@i.StudentName</p>
+                <p style="margin-left: 202px;">@i.StudentNationalId</p>
+                @if (@Model.isStudentPassed[currentIndex])
+                {
+                    <p style="color:#349D38;margin-left: 203px;">Passed</p>
+                }
+                else
+                {
+                    <p style="color:#E00000;margin-left: 203px;">Failed</p>
+                }
+                <p style="margin-left: 217px;">@i.Score</p>
+                <p style="margin-left: 235px;">@Model.StudentsStatus[currentIndex]</p>
+                <a style="margin-left: 201px;"asp-action="ExamResultDetails" asp-controller="Exam" asp-route-id="@i.AnswerId">
+
+                    more Details
+
+                </a>
+            </div>
+            currentIndex++;
+        }
+
+    </div>
+
+</div>
+
+
+<style>
+    .examName-container {
+        padding: 48px 12px 12px 88px;
+    }
+
+        .examName-container p {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+    .examInfo-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 78px;
+        width: 70%;
+        padding: 24px;
+        margin-left: 206px;
+        border-radius: 12px 12px 12px 12px;
+        box-shadow: 2px 3px 5px 0px rgba(0, 0, 255, .2);
+    }
+
+    .totalStudent-container {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border-right: 1px solid;
+        padding-right: 8px;
+    }
+
+    .examInfo-container p {
+        margin: 0px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .Info-container {
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .label-container {
+        display: flex;
+        background: #D9D9D9;
+        flex-direction: row;
+        padding: 18px 64px 17px 58px;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .label-container p {
+        font-weight: bolder;
+        margin: 0px;
+    }
+    .result-container{
+        display: flex;
+        padding-left: 64px;
+        border-bottom: 1px solid;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+    .examResults-container {
+        margin-top: 42px;
+    }
+   
+</style>
 
