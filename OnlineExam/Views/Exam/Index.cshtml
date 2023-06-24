@@ -2,10 +2,8 @@
 @{
 
     Layout = "~/Views/Shared/_SideNavBar.cshtml";
-
-    int curIdx = 0;
-
 }
+
 <div class="top-section">
     <h2>Exam List</h2>
     <img src="~/images/examList_img.png" />
@@ -19,20 +17,20 @@
     </div>
     <div class="items">
         <ul class="listOfItem">
-            @foreach (var x in Model.exams)
+            @{
+                int curIdx = 0;
+            }
+            @foreach (var x in @Model.exams)
             {
                 var numberOfQuestions = Model.numOfQuestions[curIdx];
                 DateTime EndTime = Model.EndTime[curIdx];
                 DateTime CurTime = DateTime.Now;
-
                 string ActionName = EndTime > CurTime ? "ViewQuestions" : "ViewResults";
-
-                curIdx++;
-
+                var ExamId = @x.ExamId.ToString();
                 <li>
-                    <a class="item" asp-controller="Exam"
-                        asp-action="@ActionName"
-                        asp-route-Id="@x.ExamId">
+                    <a class="Examitem" asp-controller="Exam"
+                       asp-action="@ActionName"
+                       asp-route-Id="@x.ExamId">
                         <p>@x.Title</p>
 
                         <p>
@@ -40,61 +38,43 @@
                         </p>
 
                         <p>@x.StartTime</p>
-
-                        <p id=@string.Concat("time", @x.ExamId)>
-                            <script>
-                                var countDownDate = new Date('@x.StartTime.ToString()').getTime();
-                                // Update the count down every 1 second
-                                var x = setInterval(function () {
-
-                                    // Get today's date and time
-                                    var now = new Date().getTime();
-
-                                    // Find the distance between now and the count down date
-                                    var distance = countDownDate - now;
-
-                                    // Time calculations for days, hours, minutes and seconds
-                                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                                    // Output the result in an element with id
-                                    document.getElementById("@string.Concat("time", @x.ExamId)").innerHTML = days + " d ," + hours + " h ,"
-                                        + minutes + " m ," + seconds + " s. ";
-
-                                    // If the count down is over, write some text
-                                    if (distance < 0) {
-                                        clearInterval(x);
-                                        document.getElementById("@string.Concat("time", @x.ExamId)").innerHTML = "PASSED";
-                                    }
-                                }, 1000);
-                            </script>
-                        </p>
+                        <p id="@ExamId"></p> <!-- Remove the script block here -->
                     </a>
                     <a onclick="show_more_menu(event)" asp-controller="Exam" asp-action="Delete" asp-route-id="@x.ExamId" class="btn btn-danger ">
                         <span class="icon"><i class="fa fa-trash"></i></span>
                         <script>
                             function show_more_menu(e) {
-                                if (!confirm(`Are you sure delete this Exam?`)) e.preventDefault();
+                                if (!confirm(Are you sure delete this Exam ?)) e.preventDefault();
                             }
                         </script>
-
                     </a>
                 </li>
+
+                <!-- Add a separate script block to generate the countdown timer for each exam -->
+                <script>
+                    var x = setInterval(function () {
+                        var countDownDate = new Date('@x.StartTime.ToString()').getTime(); // Move this line here
+                        var now = new Date().getTime();
+                        var distance = countDownDate - now;
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        document.getElementById("@ExamId").innerHTML = days + " d ," + hours + " h ," + minutes + " m ," + seconds + " s. ";
+                        if (distance < 0) {
+                            //clearInterval(x);
+                            document.getElementById("@ExamId").innerHTML = "PASSED";
+                        }
+                    }, 1000);
+                    console.log(@curIdx);
+                </script>
+                curIdx++;
             }
         </ul>
     </div>
 </div>
 
-<script>
-    function setActionForExam(endTime){
-        var now = new Date();
-        if(now > endTime)
-            return "ExamResults";
-        return "ViewQuestions";
-    }
-</script>
+
 <style>
 
     .listOfItem li {
@@ -105,7 +85,7 @@
         align-items: center;
     }
 
-    .item {
+    .Examitem {
         gap: 115px;
         display: inline-flex;
         align-items: center;
@@ -154,20 +134,20 @@
         text-align: center;
     }
 
-        .top-section h2 {
-            line-height: 1.5;
-            display: inline-block;
-            margin-top: 95px;
-            font-weight: 600;
-        }
+    .top-section h2 {
+        line-height: 1.5;
+        display: inline-block;
+        margin-top: 95px;
+        font-weight: 600;
+    }
 
-        .top-section img {
-            width: 190px;
-            height: 190px;
-            float: right;
-            margin-top: 24px;
-            margin-right: 32px;
-        }
+    .top-section img {
+        width: 190px;
+        height: 190px;
+        float: right;
+        margin-top: 24px;
+        margin-right: 32px;
+    }
 
     .bottom-section {
         height: fit-content;

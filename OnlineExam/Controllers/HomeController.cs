@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineExam.Data;
 using OnlineExam.Models;
 using OnlineExam.ViewModels;
 using System.Diagnostics;
@@ -16,6 +18,14 @@ namespace OnlineExam.Controllers
 
         public IActionResult Index()
         {
+            //string ConnectionString = "Server=(localdb)\\ProjectModels;Database=OnlineExam;Trusted_Connection=True;MultipleActiveResultSets=true";
+            //var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            //optionsBuilder.
+            //    UseSqlServer(ConnectionString);
+
+            //var _context = new ApplicationDbContext(optionsBuilder.Options);
+
+            //var ExamIds = _context.Exams.Select(i => i.ExamId ).ToList();
             var model = new StringId { Id = "" };
             return View(model);
         }

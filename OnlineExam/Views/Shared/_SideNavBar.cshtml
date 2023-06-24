@@ -27,7 +27,7 @@
         </div>
         <ul class="list-items">
             <li>
-                <a class="active" asp-area="" asp-controller="Exam" asp-action="Dashboard">
+                <a class="" asp-area="" asp-controller="Exam" asp-action="Dashboard">
                     <span class="icon"><i class="fa fa-bars-staggered"></i></span>
                     <span class="item">Dashboard</span>
                 </a>
@@ -45,7 +45,7 @@
                 </a>
             </li>
             <li>
-                <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                     <button type="submit" class="bt1"><i class="fa fa-right-from-bracket"></i>Logout</button>
                 </form>
             </li>
@@ -58,16 +58,16 @@
     <script>
         const items = document.querySelectorAll('.list-items li a');
         items.forEach(item => {
+            // Check if the current URL matches the href of the item
+            if (item.href === window.location.href || item.href === window.location.pathname) {
+                item.classList.add("active");
+            }
             item.addEventListener("click", function () {
-                //e.preventDefault();
                 items.forEach(a => {
                     a.classList.remove("active");
                 });
                 item.classList.add("active");
             });
-        });
-        items.forEach(item => {
-            console.log(item.outerHTML);
         });
 
     </script>
@@ -76,7 +76,6 @@
         @@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
         * {
-           
             list-style: none;
             text-decoration: none;
             margin: 0;
@@ -88,12 +87,13 @@
         body {
             background: white;
         }
-        .cont{
+
+        .cont {
             float: right;
             width: 82%;
-            
         }
-         .sidebar {
+
+        .sidebar {
             background: rgb(21, 144, 164);
             position: fixed;
             position: fixed;
@@ -102,64 +102,64 @@
             float: left;
             width: 18%;
             height: 100%;
-            margin-right:12px;
+            margin-right: 12px;
             padding: 20px 0;
             transition: all 0.5s ease;
         }
 
-         .sidebar .profile {
-            margin-bottom: 80px;
-            text-align: center;
-        }
+            .sidebar .profile {
+                margin-bottom: 80px;
+                text-align: center;
+            }
 
-    /* .wrapper .sidebar .profile img {
+                /* .wrapper .sidebar .profile img {
+                        display: block;
+                        width: 100px;
+                        height: 100px;
+                        border-radius: 50%;
+                        margin: 0 auto;
+                    }*/
+
+                .sidebar .profile h3 {
+                    color: #ffffff;
+                    margin: 10px 0 5px;
+                }
+
+                .sidebar .profile p {
+                    color: rgb(206, 240, 253);
+                    font-size: 14px;
+                }
+
+            .sidebar ul li a {
+                margin: 10px 0;
                 display: block;
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                margin: 0 auto;
-            }*/
+                padding: 13px 30px;
+                color: rgb(241, 237, 237);
+                font-size: 16px;
+                position: relative;
+            }
 
-        .sidebar .profile h3 {
-            color: #ffffff;
-            margin: 10px 0 5px;
-        }
+                .sidebar ul li a .icon {
+                    color: #dee4ec;
+                    width: 30px;
+                    display: inline-block;
+                }
 
-        .sidebar .profile p {
-            color: rgb(206, 240, 253);
-            font-size: 14px;
-        }
+                .sidebar ul li a.active {
+                    color: white;
+                    background: #3D6F77;
+                    border-left: 7px solid rgb(32, 197, 220);
+                }
 
-       .sidebar ul li a {
-            margin: 10px 0;
-            display: block;
-            padding: 13px 30px;
-            color: rgb(241, 237, 237);
-            font-size: 16px;
-            position: relative;
-        }
+                .sidebar ul li a:hover {
+                    color: white;
+                    background: #3D6F77;
+                }
 
-        .sidebar ul li a .icon {
-            color: #dee4ec;
-            width: 30px;
-            display: inline-block;
-        }
-
-         .sidebar ul li a.active {
-            color: white;
-            background: #3D6F77;
-            border-left: 7px solid rgb(32, 197, 220);
-        }
-
-       .sidebar ul li a:hover {
-            color: white;
-            background: #3D6F77;
-        }
-
-        .sidebar ul li a:hover .icon,
-        .sidebar ul li a.active .icon {
-            color: white;
-        }
+                    .sidebar ul li a:hover .icon,
+                    .sidebar ul li a.active .icon {
+                        color: white;
+                    }
 
         .wrapper .sidebar ul li a:hover:before,
         .wrapper .sidebar ul li a.active:before {
@@ -186,14 +186,14 @@
             box-shadow: inset 0 0 0 0 #3D6F77;
         }
 
-        .bt1:hover {
-            color: white;
-            box-shadow: inset 0 -100px 0 0 #3D6F77;
-        }
+            .bt1:hover {
+                color: white;
+                box-shadow: inset 0 -100px 0 0 #3D6F77;
+            }
 
             .bt1:active {
-            transform: scale(0.9);
-        }
+                transform: scale(0.9);
+            }
 
         a:link {
             text-decoration: none;

@@ -3,9 +3,10 @@
     ViewData["Title"] = "Create Exam";
     Layout = "~/Views/Shared/_SideNavBar.cshtml";
 }
-<form method="post">
+
+<form method="post" id="exam-form">
     <div class="container">
-        <p >Create New Exam</p>
+        <p>Create New Exam</p>
         <div class="exam-container">
             <div class="form-group">
                 <label asp-for="Title"></label>
@@ -13,17 +14,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="Duration"></label>
-                <input asp-for="Duration" class="form-control" required />
+                <input asp-for="Duration" class="form-control" required type="number" min="10" />
             </div>
             <div class="form-group">
                 <label asp-for="StartTime"></label>
                 <input asp-for="StartTime" class="form-control" required />
             </div>
+            <button id="my-btn" type="submit" class="btn btn-primary">Save</button>
 
-            <button type="submit" class="btn btn-primary">Save</button>
-            @* <a asp-action="Index" asp-controller="Exam" class="btn btn-secondary">
-            back to Exams
-            </a>*@
         </div>
     </div>
 </form>
@@ -35,7 +33,7 @@
         flex-wrap: nowrap;
         flex-direction: column;
         align-items: center;
-        margin-top:42px;
+        margin-top: 42px;
         max-width: 95%;
     }
 
@@ -51,9 +49,24 @@
         flex-direction: column;
     }
 
-    .container p{
+    .container p {
         font-size: 20px;
         font-weight: 600;
         margin-bottom: 20px;
     }
 </style>
+
+<script>
+    const form = document.querySelector('#exam-form');
+    const myButton = document.querySelector('#my-btn');
+    myButton.addEventListener('click', (event) => {
+        const now = new Date();
+        const startTimeInput = document.querySelector('#StartTime');
+        const startTime = new Date(startTimeInput.value);
+        if (startTime <= now) {
+            event.preventDefault(); // Prevent the form from submitting
+            alert('Please enter a start time after the current time.'); // Show an alert message
+            return;
+        }
+    });
+</script>
