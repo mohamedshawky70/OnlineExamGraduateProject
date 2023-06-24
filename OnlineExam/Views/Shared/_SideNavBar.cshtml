@@ -27,7 +27,7 @@
         </div>
         <ul class="list-items">
             <li>
-                <a class="active" asp-area="" asp-controller="Exam" asp-action="Dashboard">
+                <a class="" asp-area="" asp-controller="Exam" asp-action="Dashboard">
                     <span class="icon"><i class="fa fa-bars-staggered"></i></span>
                     <span class="item">Dashboard</span>
                 </a>
@@ -58,17 +58,14 @@
     <script>
         const items = document.querySelectorAll('.list-items li a');
         items.forEach(item => {
+            // Check if the current URL matches the href of the item
+            if (item.href === window.location.href || item.href === window.location.pathname) {
+                item.classList.add("active");
+            }
             item.addEventListener("click", function () {
-                //e.preventDefault();
                 items.forEach(a => {
                     a.classList.remove("active");
                 });
-                item.classList.add("active");
-            });
-        });
-        items.forEach(item => {
-            console.log(item.outerHTML);
-        });
 
     </script>
 
