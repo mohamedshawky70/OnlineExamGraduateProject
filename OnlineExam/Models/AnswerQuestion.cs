@@ -27,8 +27,8 @@ namespace OnlineExam.Models
 
 
 
-        public byte? SelectedAnswer { set; get; }
-        public byte? TrueAnswer { set; get; }
+        public byte SelectedAnswer { set; get; } = 0;
+        public byte TrueAnswer { set; get; } = 5;
 
         public bool Check { set; get; } = false;
 

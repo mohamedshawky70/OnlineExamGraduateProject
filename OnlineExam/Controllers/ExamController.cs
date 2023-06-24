@@ -254,9 +254,25 @@ namespace OnlineExam.Controllers
 
         public IActionResult Dashboard()
         {
+            List<DashboardViewModel> model = new List<DashboardViewModel>();
+
+            foreach(var i in _context.Answers)
+            {
+                DashboardViewModel item = new DashboardViewModel
+                {
+                    StudentId = i.StudentNationalId,
+                    StudentName = i.StudentName,
+                    Score = (int)i.Score,
+                    ExamName = _context.Exams.First(i => i.ExamId == i.ExamId).Title
+
+                };
+
+                model.Add(item);
+                
+            }
 
 
-            return View();
+            return View(model);
         }
 
         public IActionResult ViewResults(int? id)

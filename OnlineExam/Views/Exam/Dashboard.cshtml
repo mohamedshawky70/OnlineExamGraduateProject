@@ -1,4 +1,78 @@
-﻿@{
+﻿@model List<DashboardViewModel>
+
+@{
     ViewData["Title"] = "Dashboard Page";
     Layout = "~/Views/Shared/_SideNavBar.cshtml";
 }
+<div class="main-container">
+    <div class="top-container">
+        <div class="greetings-contianers">
+            <p style="font-size: 18px;font-weight: bolder;">Dashboard</p>
+            <p style="font-size: 16px; width: 445px;font-weight: 500;font-family: sans-serif;">
+                Greetings! this dashboard display the information about all exams you made. Using this dashboard,
+                you can view exams’ results or specific student results.</p>
+        </div>
+        <img class="img-dashboard" src="~/images/dashboard_img.png"/>
+    </div>
+
+
+
+    <div class="bottom-container">
+
+        <table style="width:100%">
+
+            <tr class="result-labels">
+                <th>Exam</th>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Grade</th>
+            </tr>
+
+            @foreach(var x in Model)
+            {
+                <tr class="item-result">
+                    <th>@x.ExamName</th>
+                    <th>@x.StudentName</th>
+                    <th>@x.StudentId</th>
+                    <th>@x.Score</th>
+                </tr>
+
+            }
+
+        </table>
+    </div>
+</div>
+
+<style>
+    .top-container{
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+    }
+    .img-dashboard{
+        width: 335px;
+        height: 330px;
+    }
+    .greetings-contianers{
+        padding: 56px;
+    }
+
+    .bottom-container th {
+        padding-top: 18px;
+        padding-bottom: 18px;
+        text-align: center;
+    }
+
+    .result-labels {
+        background: #D9D9D9
+    }
+
+    .result-labels th {
+       font-size:15px;
+       font-weight:600;
+    }
+
+    .item-result {
+        border-bottom:1px solid black;
+    }
+</style>

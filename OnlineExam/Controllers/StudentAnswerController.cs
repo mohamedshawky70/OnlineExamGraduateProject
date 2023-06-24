@@ -26,10 +26,16 @@ namespace OnlineExam.Controllers
 
             if (id == null || _context.Exams.Where(i => i.ExamId == id).Count() == 0)
             {
-                return NotFound();
+                return RedirectToAction("Index","Home");
             }
 
-            var model = new StudentInfo { ExamId = (int)id, NationalId = "", Name = "" };
+            var StartTime = _context.Exams.FirstOrDefault(i => i.ExamId == id).StartTime;
+            var EndTime = _context.Exams.FirstOrDefault(i => i.ExamId == id).EndTime;
+
+
+            var model = new StudentInfo { ExamId = (int)id, NationalId = "", Name = "" , StartTime=(DateTime)StartTime,
+                EndTime=(DateTime)EndTime
+            };
 
             return View(model);
         }
@@ -68,7 +74,6 @@ namespace OnlineExam.Controllers
                     AnswerId = StudentAns.AnswerId,
                     TrueAnswer = q.SelectedAnswer,
                     Index = idx
-
                 };
 
                 idx++;
@@ -98,35 +103,54 @@ namespace OnlineExam.Controllers
             {
                 return RedirectToAction(nameof(Submit), new { indexx.AnswerId });
             }
-            return View(question);
+
+            int NumOfQuestions = _context.AnswerQuestions.Where(i => i.AnswerId == indexx.AnswerId).Count();
+
+            int ExamId = _context.Answers.Where(i => i.AnswerId == indexx.AnswerId).ToArray()[0].ExamId;
+            var ExamName = _context.Exams.FirstOrDefault(i => i.ExamId == ExamId).Title;
+            DateTime ExamDate = (DateTime) _context.Exams.FirstOrDefault(i => i.ExamId == ExamId).EndTime;
+
+            ExamInformation model = new ExamInformation
+            {
+                ExamName = ExamName,
+                ExamDate = ExamDate,
+                question = question,
+                NumOfQuestions = NumOfQuestions
+
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         public IActionResult StudentExam(IFormCollection form)
         {
             int index;
-            if (!int.TryParse(form["index"], out index))
+            if (!int.TryParse(form["question.index"], out index))
             {
                 index = 0;
             }
 
             int answerId = 0;
 
-            if (int.TryParse(form["AnswerId"], out answerId))
+            if( int.TryParse(form["question.AnswerId"], out answerId))
             {
-
 
             }
 
             int answerIndex;
-            if (int.TryParse(form["AnswerId"], out answerIndex))
+
+
+            if (int.TryParse(form["question.AnswerId"], out answerIndex))
             {
                 var question = _context.AnswerQuestions.FirstOrDefault(q => q.Index == index && q.AnswerId == answerId);
                 if (question != null)
                 {
-                    int selectedOption;
-                    if (int.TryParse(form["SelectedAnswer"], out selectedOption))
+                    int selectedOption = 0;
+                    if (int.TryParse(form["question.SelectedAnswer"], out selectedOption))
                     {
+                        if (selectedOption == null)
+                            selectedOption = 0;
                         question.SelectedAnswer = (byte)selectedOption;
 
                         _context.AnswerQuestions.Update(question);
@@ -145,7 +169,10 @@ namespace OnlineExam.Controllers
             {
                 index++;
             }
-
+            else if(action == "submit")
+            {
+                return RedirectToAction("Submit" , new {AnswerId =  answerId});
+            }
             return RedirectToAction(nameof(StudentExam), new IndexAndAnswerId { Index = index, AnswerId = answerId });
         }
 

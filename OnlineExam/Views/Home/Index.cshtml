@@ -14,20 +14,18 @@
 <form asp-area="Identity" asp-page="/Account/Login">
     <button class="custom-btn btn-1">Make Exam</button>
 </form>
-@*<form asp-controller="StudentAnswer" asp-action="Index" method="post">
-    @* <input asp-for="MyNumber" />
-    <input asp-for="Id" type="text" name="text" class="custom_input" placeholder="Enter exam code.">
-    <button type="submit">Submit</button>
-</form>*@
 
 <form asp-controller="StudentAnswer" asp-action="Index" method="post">
     <div class="input-container">
-        <input asp-for="Id"  placeholder="Enter Exam ID" required="" >
-        <button class="invite-btn" type="submit">
+        <input asp-for="Id"  placeholder="Enter Exam ID" required="" id ="IdInput">
+        <span asp-validation-for="Id" class="text-danger"></span>
+        <button class="invite-btn" type="submit" id="button">
             Join
         </button>
     </div>
 </form>
+
+ 
 
 <style>
     * {

@@ -1,9 +1,9 @@
-﻿@model AnswerQuestion
+﻿@model ExamInformation
 
 @{
     ViewData["Title"] = "Exam";
     Layout = "~/Views/Shared/_StudentExamBar.cshtml";
-    var currentExamIndex = Model.Index + 1;
+    var currentExamIndex = Model.question.Index + 1;
 }
 
 <form asp-controller="StudentAnswer" asp-action="StudentExam" method="post" style="height:100%">
@@ -20,36 +20,36 @@
 
                 <hr style="margin-bottom: 0px;  margin-top: 0px; border-top: 2px solid;width: 100%;">
 
-                <input type="hidden" asp-for="@Model.AnswerId" />
+                <input type="hidden" asp-for="@Model.question.AnswerId" />
 
                 <div class="form-group innerQuestion-container">
-                    <h3>@Model.Head</h3>
+                    <h3>@Model.question.Head</h3>
 
                     <div class="form-check answer-container">
-                        <input class="custome-radio" type="radio" asp-for="SelectedAnswer" value="1"name="SelectedAnswer" />
-                        <label class="custome-label" asp-for="SelectedAnswer">
-                            @Model.a
+                        <input class="custome-radio" type="radio" asp-for="question.SelectedAnswer" value="1" />
+                        <label class="custome-label" asp-for="question.SelectedAnswer">
+                            @Model.question.a
                         </label>
                     </div>
 
                     <div class="form-check answer-container">
-                        <input class="custome-radio" type="radio" asp-for="SelectedAnswer" value="2" />
-                        <label class="custome-label" asp-for="SelectedAnswer">
-                            @Model.b
+                        <input class="custome-radio" type="radio" asp-for="question.SelectedAnswer" value="2" />
+                        <label class="custome-label" asp-for="question.SelectedAnswer">
+                            @Model.question.b
                         </label>
                     </div>
 
                     <div class="form-check answer-container">
-                        <input class="custome-radio" type="radio" asp-for="SelectedAnswer" value="3" />
-                        <label class="custome-label" asp-for="SelectedAnswer">
-                            @Model.c
+                        <input class="custome-radio" type="radio" asp-for="question.SelectedAnswer" value="3" />
+                        <label class="custome-label" asp-for="question.SelectedAnswer">
+                            @Model.question.c
                         </label>
                     </div>
 
                     <div class="form-check answer-container">
-                        <input class="custome-radio" type="radio" asp-for="SelectedAnswer" value="4" />
-                        <label class="custome-label" asp-for="SelectedAnswer">
-                            @Model.d
+                        <input class="custome-radio" type="radio" asp-for="question.SelectedAnswer" value="4" />
+                        <label class="custome-label" asp-for="question.SelectedAnswer">
+                            @Model.question.d
                         </label>
                     </div>
                 </div>
@@ -72,30 +72,33 @@
                     </div>
                 </div>
                 <div class="examName-container">
-                    <p>Exam Name</p>
+                    <p>@Model.ExamName</p>
                 </div>
             </div>
         </div>
 
-        <input type="hidden" asp-for="Index" />
+        <input type="hidden" asp-for="question.Index" />
 
         <div class="footer-container">
             <div class="btns-container">
                 <div class="form-group" style="margin: 0px 0px 0px 64px;">
-                    @if (Model.Index != 0)
+                    @if (Model.question.Index != 0)
                     {
                         <button type="submit" name="action" value="prev"
                             class="custom-btn btn-1" style="border-radius: 32px 0px 0px 32px;">
                             Previous
                         </button>
                     }
-                    <button type="submit" name="action" value="next"
-                            class="custom-btn btn-1" style="border-radius: 0px 32px 32px 0px;">
-                        Next
-                    </button>
+                    @if(Model.question.Index +1 != Model.NumOfQuestions)
+                    {
+                        <button type="submit" name="action" value="next"
+                                class="custom-btn btn-1" style="border-radius: 0px 32px 32px 0px;">
+                            Next
+                        </button>     
+                    }
                 </div>
                 <div style="margin-right:92px;">
-                    <button asp-controller="StudentAnswer" asp-action="Submit" type ="submit" class="custom-btn btn-2">
+                    <button  type ="submit" name ="action" value="submit" class="custom-btn btn-2">
                         Submit
                     </button>
                 </div>
