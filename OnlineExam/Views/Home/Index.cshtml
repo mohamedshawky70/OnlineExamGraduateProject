@@ -5,24 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
-<a asp-controller="Exam" asp-action="Index">
-    Click
-</a>
-
-<br />
-
-
-<a asp-controller="Exam" asp-action="CreateExam">
-    Create exam
-</a>
-*@
-
-
 <img src="images/home_img.jpg" alt="">
     
 <div class="mo">
@@ -39,8 +21,12 @@
 </form>*@
 
 <form asp-controller="StudentAnswer" asp-action="Index" method="post">
-    <input asp-for="Id" class="custom_input" placeholder="Enter ID">
-    <button type="submit">Submit</button>
+    <div class="input-container">
+        <input asp-for="Id"  placeholder="Enter Exam ID" required="" >
+        <button class="invite-btn" type="submit">
+            Join
+        </button>
+    </div>
 </form>
 
 <style>
@@ -134,4 +120,74 @@
         top: 110px;
     }
 
+    .input-container {
+        position: relative;
+        display: flex;
+        height: 40px;
+        width: 100%;
+        min-width: 200px;
+        max-width: 250px;
+        background-color: #fff;
+        top: 288px;
+        left: 146px;
+        border-radius: 8px;
+        box-shadow: 20px 20px 30px rgba(0, 0, 0, .05);
+    }
+
+    .input-container input {
+        height: 100%;
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid rgb(176 190 197);
+        background-color: transparent;
+        padding: 0.625rem 70px 0.625rem 0.75rem;
+        font-size: 16px;
+        line-height: 1.25rem;
+        font-weight: 400;
+        color: rgb(69 90 100);
+        outline: none;
+        transition: all .15s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            
+    }
+
+    .input-container input:focus {
+        border: 2px solid rgb(24, 182, 206);
+    }
+
+    .invite-btn {
+        position: absolute;
+        width: 65px;
+        right: 4px;
+        top: 4px;
+        bottom: 4px;
+        z-index: 10;
+        border-radius: 4px;
+        background-color: rgba(21,144,164,1);
+        color: #fff;
+        padding-top: .25rem;
+        padding-bottom: .25rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        border: none;
+        transition: .6s ease;
+    }
+
+    .invite-btn:hover {
+        right: 2px;
+        top: 2px;
+        bottom: 2px;
+        border-radius: 8px;
+    }
+
+    .input-container input:placeholder-shown ~ .invite-btn {
+        pointer-events: none;
+        background-color: gray;
+        opacity: 0.5;
+    }
 </style>

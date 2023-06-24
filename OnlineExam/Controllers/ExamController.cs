@@ -272,33 +272,92 @@ namespace OnlineExam.Controllers
             model.answers = _context.Answers.Where(i => i.ExamId == id).ToList();
 
             int total = model.answers.Count;
-
             int numOFQuestions = _context.Questions.Where(i => i.ExamId == id).Count();
-
             int critical = numOFQuestions / 2;
-
-            int numOfSucceeded = 0;
-
-            int sumOfScores = 0;
+            int numOfSucceeded = 0, sumOfScores = 0;
+            model.isStudentPassed = new List<bool>();
+            model.StudentsStatus = new List<String>();
 
             foreach (var i in model.answers)
             {
-                if(i.Score >=  critical)
-                     numOfSucceeded++;
+                if (i.Score >= critical)
+                {
+                    numOfSucceeded++;
+                    model.isStudentPassed.Add(true);
 
+                }
+                else
+                {
+                    model.isStudentPassed.Add(false);
+                }
+                model.StudentsStatus.Add(GetLetterGrade((int)i.Score, total));
                 sumOfScores += (int)i.Score;
 
             }
 
-            model.passed = numOfSucceeded;
-            model.Failed = total - numOfSucceeded;
+            model.numberOfPassedStudent = numOfSucceeded;
+            model.numberOfFailedStudent = total - numOfSucceeded;
             total = Math.Max(total, 1);
-
-            model.averageGrade = sumOfScores / total;
-
+             model.averageGrade = sumOfScores / total;
+   
             return View(model);
         }
+        public string GetLetterGrade(int totalScore, int totalQuestions)
+        {
+            double scorePercent = ((double)totalScore / totalQuestions) * 100;
+            string letterGrade;
 
+            if (scorePercent >= 90)
+            {
+                letterGrade = "A+";
+            }
+            else if (scorePercent >= 85)
+            {
+                letterGrade = "A";
+            }
+            else if (scorePercent >= 80)
+            {
+                letterGrade = "A-";
+            }
+            else if (scorePercent >= 75)
+            {
+                letterGrade = "B+";
+            }
+            else if (scorePercent >= 70)
+            {
+                letterGrade = "B";
+            }
+            else if (scorePercent >= 65)
+            {
+                letterGrade = "B-";
+            }
+            else if (scorePercent >= 60)
+            {
+                letterGrade = "C+";
+            }
+            else if (scorePercent >= 55)
+            {
+                letterGrade = "C";
+            }
+            else if (scorePercent >= 50)
+            {
+                letterGrade = "C-";
+            }
+            else if (scorePercent >= 45)
+            {
+                letterGrade = "D+";
+            }
+            else if (scorePercent >= 40)
+            {
+                letterGrade = "D";
+            }
+            else
+            {
+                letterGrade = "F";
+            }
+
+            return letterGrade;
+        }
         public IActionResult ExamResultDetails(int ?id)
         {
             if (id == null || id == 0)
