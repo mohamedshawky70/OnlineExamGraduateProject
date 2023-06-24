@@ -184,6 +184,54 @@ namespace OnlineExam.Data.Migrations
                     b.ToTable("Answers");
                 });
 
+            modelBuilder.Entity("OnlineExam.Models.AnswerQuestion", b =>
+                {
+                    b.Property<int>("AnswerQuestionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AnswerQuestionId"), 1L, 1);
+
+                    b.Property<int>("AnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Check")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Head")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
+
+                    b.Property<byte?>("SelectedAnswer")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("TrueAnswer")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("a")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("b")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("c")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("d")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AnswerQuestionId");
+
+                    b.HasIndex("AnswerId");
+
+                    b.ToTable("AnswerQuestions");
+                });
+
             modelBuilder.Entity("OnlineExam.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -315,17 +363,8 @@ namespace OnlineExam.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsA")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsB")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsC")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsD")
-                        .HasColumnType("bit");
+                    b.Property<byte>("SelectedAnswer")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("a")
                         .IsRequired()
@@ -410,6 +449,17 @@ namespace OnlineExam.Data.Migrations
                     b.Navigation("Exams");
                 });
 
+            modelBuilder.Entity("OnlineExam.Models.AnswerQuestion", b =>
+                {
+                    b.HasOne("OnlineExam.Models.Answer", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Answer");
+                });
+
             modelBuilder.Entity("OnlineExam.Models.Exam", b =>
                 {
                     b.HasOne("OnlineExam.Models.ApplicationUser", "ApplicationUser")
@@ -424,7 +474,7 @@ namespace OnlineExam.Data.Migrations
             modelBuilder.Entity("OnlineExam.Models.Question", b =>
                 {
                     b.HasOne("OnlineExam.Models.Exam", "Exam")
-                        .WithMany("Questions")
+                        .WithMany()
                         .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -435,11 +485,6 @@ namespace OnlineExam.Data.Migrations
             modelBuilder.Entity("OnlineExam.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Exams");
-                });
-
-            modelBuilder.Entity("OnlineExam.Models.Exam", b =>
-                {
-                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }

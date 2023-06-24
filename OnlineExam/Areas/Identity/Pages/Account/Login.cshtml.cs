@@ -2,19 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using OnlineExam.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnlineExam.Areas.Identity.Pages.Account
 {
@@ -66,7 +59,7 @@ namespace OnlineExam.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [Display(Name = "Email or UserName")]
+            [Display(Name = "E-mail or UserName")]
             public string Email { get; set; }
 
             /// <summary>
@@ -81,7 +74,7 @@ namespace OnlineExam.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Keep me login")]
             public bool RememberMe { get; set; }
         }
 
@@ -102,8 +95,8 @@ namespace OnlineExam.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-       
-      
+
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -112,10 +105,13 @@ namespace OnlineExam.Areas.Identity.Pages.Account
 
             // made by ahmed
             var userName = "";
-            foreach (var i in Input.Email)
+            if (Input.Email != null)
             {
-                if (i == '@') break;
-                userName += i;
+                foreach (var i in Input.Email)
+                {
+                    if (i == '@') break;
+                    userName += i;
+                }
             }
 
             ///
@@ -128,7 +124,8 @@ namespace OnlineExam.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    // return LocalRedirect(returnUrl);
+                    return RedirectToAction("Dashboard", "Exam");
                 }
                 if (result.RequiresTwoFactor)
                 {

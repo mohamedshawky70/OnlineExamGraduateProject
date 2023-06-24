@@ -7,7 +7,7 @@
         public string StudentNationalId { set; get; }
         public string StudentName { set; get; }
 
-        public int ?Score { set; get; } 
+        public int? Score { set; get; }
 
 
         public Exam Exams { get; set; }

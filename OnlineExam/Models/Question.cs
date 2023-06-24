@@ -20,14 +20,13 @@ namespace OnlineExam.Models
 
         public string? d { set; get; }
 
-        public bool IsA { set; get; }
-        public bool IsB { set; get; }
+        /*  public bool IsA { set; get; }
+          public bool IsB { set; get; }
 
-        public bool IsC { set; get; }
+          public bool IsC { set; get; }
 
-        public bool IsD { set; get; }
-
-
+          public bool IsD { set; get; }*/
+        public byte SelectedAnswer { set; get; }
 
 
         public Exam Exam { set; get; }

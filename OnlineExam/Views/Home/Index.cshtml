@@ -1,8 +1,11 @@
-﻿@{
+﻿@model StringId
+
+@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
+@*<div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
@@ -17,3 +20,118 @@
 <a asp-controller="Exam" asp-action="CreateExam">
     Create exam
 </a>
+*@
+
+
+<img src="images/home_img.jpg" alt="">
+    
+<div class="mo">
+    <h2>Free Exam System</h2>
+    <p>You can build secure multiple-choice questions exam.You can take exams in meetings with teacher</p>
+</div>
+<form asp-area="Identity" asp-page="/Account/Login">
+    <button class="custom-btn btn-1">Make Exam</button>
+</form>
+@*<form asp-controller="StudentAnswer" asp-action="Index" method="post">
+    @* <input asp-for="MyNumber" />
+    <input asp-for="Id" type="text" name="text" class="custom_input" placeholder="Enter exam code.">
+    <button type="submit">Submit</button>
+</form>*@
+
+<form asp-controller="StudentAnswer" asp-action="Index" method="post">
+    <input asp-for="Id" class="custom_input" placeholder="Enter ID">
+    <button type="submit">Submit</button>
+</form>
+
+<style>
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .mo {
+        width: 300px;
+    }
+    .mo h2 {
+        position: absolute;
+        width: 325px;
+        height: 50px;
+        left: 90px;
+        top: 172px;
+        font-family: 'Jua';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 50px;
+        color: #000000;
+    }
+
+    .mo p {
+        position: absolute;
+        width: 300px;
+        height: 120px;
+        left: 90px;
+        top: 242px;
+        font-family: 'Jua';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 40px;
+        color: rgba(22, 22, 22, 0.85);
+    }
+
+    .custom-btn {
+        width: 130px;
+        height: 40px;
+        color: #fff;
+        top: 328px;
+        border-radius: 5px;
+        font-size: 16px;
+        left :-24px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        outline: none;
+    }
+
+    .btn-1 {
+        background: rgba(21,144,164,1);
+        border: none;
+    }
+
+    .btn-1:hover {
+        background: rgb(24, 182, 206);
+    }
+
+    .custom_input {
+        height: 40px;
+        top: 288px;
+        left: 146px;
+        color: black;
+        border: 2px solid rgb(24, 182, 206);
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        align-items:start;
+        border-radius: 5px;
+        padding: 10px 25px;
+        position: relative;
+        background: transparent;
+        max-width: 190px;
+    }
+
+    .custom_input:active {
+        border: 2px solid rgba(22, 22, 22, 0.85);
+    }
+
+
+    img {
+        position: absolute;
+        left: 830px;
+        top: 110px;
+    }
+
+</style>

@@ -1,50 +1,94 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - OnlineExam</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OnlineExam.styles.css" asp-append-version="true" />
+    <link href='https://fonts.googleapis.com/css?family=Jua' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body >
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OnlineExam</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+
+        <nav class="nav_custom_class navbar">
+            <div class="container-fluid" style="padding-top: 8px; padding-bottom: 8px;">
+
+                <div class="navbar-header" style="padding-left: 12px;">
+                    <a class="navbar-brand txt_narbar" asp-area="" asp-controller="Home" asp-action="Index">Exam System</a>
                 </div>
+
+                <ul class="nav navbar-nav navbar-right" style="padding-right: 12px;">
+                    <li >
+                        <a class="txt_narbar active" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li >
+                        <a class="txt_narbar" asp-area="" asp-controller="Home" asp-action="Privacy">About Us</a>
+                    </li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li >
+                            <a class="txt_narbar" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+                        </li>
+                        <li>
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button type="submit" class="txt_narbar">Logout</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li >
+                            <a class="txt_narbar" asp-area="Identity" asp-page="/Account/Register">Teacher Register</a>
+                        </li>
+                        <li >
+                            <a class="txt_narbar" asp-area="Identity" asp-page="/Account/Login">Teacher Login</a>
+                        </li>
+                    }
+                </ul>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container" >
+        <main role="main" class="pb-3" >
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+  @*  <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - OnlineExam - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer>*@
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+<style>
+    .nav_custom_class {
+        background: #D9D9D9;
+    }
+
+    .txt_narbar {
+        margin: auto;
+        color: black;
+        font-size: 20px;
+        font-weight: bold;
+        
+    }
+    .active, .txt_narbar:hover {
+        color: #1590A4;
+    }
+    
+
+</style>
 </html>

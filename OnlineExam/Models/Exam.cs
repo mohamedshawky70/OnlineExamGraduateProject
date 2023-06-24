@@ -1,5 +1,4 @@
-﻿using Microsoft.Build.Framework;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OnlineExam.Models
 {
@@ -13,12 +12,12 @@ namespace OnlineExam.Models
         public string Title { get; set; }
 
         public int Duration { set; get; }
-        public DateTime ?AddedAt { get; set; } 
-        public DateTime ?StartTime { get; set; }
-        public DateTime ?EndTime { get; set; }
+        public DateTime? AddedAt { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
 
-        public List<Question> Questions { set; get; }
+        //public List<Question> ?Questions { set; get; }
 
         public ApplicationUser ApplicationUser { set; get; }
         public string ApplicationUserId { get; set; }

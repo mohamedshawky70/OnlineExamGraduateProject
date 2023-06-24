@@ -17,7 +17,7 @@ namespace OnlineExam.Data
             base.OnModelCreating(builder);
 
 
-            builder.Entity<ApplicationUser>().ToTable("Users" , "security");
+            builder.Entity<ApplicationUser>().ToTable("Users", "security");
             builder.Entity<IdentityRole>().ToTable("Roles", "security");
             builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles", "security");
             builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims", "security");
@@ -34,7 +34,7 @@ namespace OnlineExam.Data
         public DbSet<ApplicationUser> Users { set; get; }
         public DbSet<Exam> Exams { set; get; }
         public DbSet<Question> Questions { set; get; }
-       // public DbSet<Choice> Choices { set; get; }
+        public DbSet<AnswerQuestion> AnswerQuestions { set; get; }
         public DbSet<Answer> Answers { set; get; }
     }
 }

@@ -1,0 +1,296 @@
+﻿@model AnswerQuestion
+
+@{
+    ViewData["Title"] = "Exam";
+    Layout = "~/Views/Shared/_StudentExamBar.cshtml";
+    var currentExamIndex = Model.Index + 1;
+}
+
+<form asp-controller="StudentAnswer" asp-action="StudentExam" method="post" style="height:100%">
+    <div class="main-container">
+        <div class="exam-header">
+            <p style="margin-left: 393px;"> Online MCQ Exam </p>
+            <p style="margin-right: 64px;">Time Remaining</p>
+        </div>
+
+        <div class="center-container">
+
+            <div class="question-container">
+                <p>Question - @currentExamIndex</p>
+
+                <hr style="margin-bottom: 0px;  margin-top: 0px; border-top: 2px solid;width: 100%;">
+
+                <input type="hidden" asp-for="@Model.AnswerId" />
+
+                <div class="form-group innerQuestion-container">
+                    <h3>@Model.Head</h3>
+
+                    <div class="form-check answer-container">
+                        <input class="custome-radio" type="radio" asp-for="SelectedAnswer" value="1"name="SelectedAnswer" />
+                        <label class="custome-label" asp-for="SelectedAnswer">
+                            @Model.a
+                        </label>
+                    </div>
+
+                    <div class="form-check answer-container">
+                        <input class="custome-radio" type="radio" asp-for="SelectedAnswer" value="2" />
+                        <label class="custome-label" asp-for="SelectedAnswer">
+                            @Model.b
+                        </label>
+                    </div>
+
+                    <div class="form-check answer-container">
+                        <input class="custome-radio" type="radio" asp-for="SelectedAnswer" value="3" />
+                        <label class="custome-label" asp-for="SelectedAnswer">
+                            @Model.c
+                        </label>
+                    </div>
+
+                    <div class="form-check answer-container">
+                        <input class="custome-radio" type="radio" asp-for="SelectedAnswer" value="4" />
+                        <label class="custome-label" asp-for="SelectedAnswer">
+                            @Model.d
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="side-bar-container">
+                <div class="timeRemaining-container">
+                    <div class="hoursRemaining-container">
+                        <p>00</p>
+                        <p>Hours</p>
+                    </div>
+                    <div class="hoursRemaining-container">
+                        <p>00</p>
+                        <p>Minutes</p>
+                    </div>
+                    <div class="hoursRemaining-container">
+                        <p>00</p>
+                        <p>Seconds</p>
+                    </div>
+                </div>
+                <div class="examName-container">
+                    <p>Exam Name</p>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="Index" />
+
+        <div class="footer-container">
+            <div class="btns-container">
+                <div class="form-group" style="margin: 0px 0px 0px 64px;">
+                    @if (Model.Index != 0)
+                    {
+                        <button type="submit" name="action" value="prev"
+                            class="custom-btn btn-1" style="border-radius: 32px 0px 0px 32px;">
+                            Previous
+                        </button>
+                    }
+                    <button type="submit" name="action" value="next"
+                            class="custom-btn btn-1" style="border-radius: 0px 32px 32px 0px;">
+                        Next
+                    </button>
+                </div>
+                <div style="margin-right:92px;">
+                    <button asp-controller="StudentAnswer" asp-action="Submit" type ="submit" class="custom-btn btn-2">
+                        Submit
+                    </button>
+                </div>
+            </div>
+            <hr style="border-top: 1px solid black;">
+            <div class="info-container">
+                <div id="circle" style="background: #00A607;"></div>
+                <p>Answered</p>
+                <div id="circle" style="background: red;"> </div>
+                <p>Not Answered</p>
+                <div id="circle" style="background: #303F9F;"> </div>
+                <p>Current</p>
+                <div id="circle" style="background: #7E7171;"> </div>
+                <p>Not Seen</p>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<style>
+    p{
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .main-container {
+        margin: 0px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .exam-header {
+        background: #D9D9D9;
+        display: flex;
+        flex-direction: row;
+        padding: 12px;
+        justify-content: space-between;
+    }
+
+    .exam-header p {
+        margin: 0px;
+        font-weight: bolder;
+        font-size: 16px;
+    }
+
+    .footer-container {
+        background: #D9D9D9;
+        position: absolute;
+        width: 100%;
+        bottom: 0px;
+    }
+
+    .btns-container {
+        padding-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+
+    .custom-btn {
+        width: 130px;
+        height: 40px;
+        color: #fff;
+        font-size: 16px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        outline: none;
+    }
+
+    .btn-1 {
+        background: rgba(21,144,164,1);
+        border: none;
+    }
+
+    .btn-1:hover {
+        background: rgb(24, 182, 206);
+    }
+
+    .btn-2 {
+        border-radius: 32px 32px 32px 32px;
+        background: #349D38;
+        border: none;
+    }
+
+    .btn-2:hover {
+        background: #3fbf43;
+    }
+
+    .info-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 12px;
+    }
+
+    .info-container p {
+        margin: 0px;
+        margin-left: 6px;
+        font-weight: bold;
+    }
+
+    #circle {
+        width: 16px;
+        height: 16px;
+        -webkit-border-radius: 25px;
+        -moz-border-radius: 25px;
+        border-radius: 25px;
+        background: red;
+        margin-left: 12px;
+    }
+
+    .center-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .side-bar-container {
+        width: 256px;
+        border-left-style: solid;
+    }
+
+    .timeRemaining-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        margin-top: 18px;
+    }
+
+    .hoursRemaining-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hoursRemaining-container p{
+        margin:0;
+        font-weight:bold;
+    }
+
+    .examName-container{
+        background: #D9D9D9;
+        display: flex;
+        padding: 12px 12px 12px 12px;
+        justify-content: center;
+        align-items: center;
+        margin-top:12px;
+    }
+
+    .examName-container  p{
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0px;
+    }
+
+    .question-container{
+        width: 80%;
+        padding: 5px 0px 0px 42px;
+    }
+
+    .question-container p{
+        font-size: 18px;
+        font-weight: 600;
+        margin: 18px 12px 4px 0px;
+    }
+
+    .innerQuestion-container{
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        margin-top: 12px;
+    }
+    .answer-container{
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .custome-radio{
+        width: 18px;
+        height: 18px;
+        margin:0px;
+    }
+    .custome-label{
+        font-weight: 500;
+        font-size: 16px;
+        margin: 0px;
+        margin-top: 4px;
+    }
+</style>

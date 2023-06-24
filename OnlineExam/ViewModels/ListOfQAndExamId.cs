@@ -4,8 +4,12 @@ namespace OnlineExam.ViewModels
 {
     public class ListOfQAndExamId
     {
-        public List<Question> questions;
+        public List<Question> questions { set; get; }
 
-        public int Id;
+        public string ExamName { set; get; }   
+
+        public DateTime ?StartTime { set; get; }
+
+        public int Id { set;get; }
     }
 }

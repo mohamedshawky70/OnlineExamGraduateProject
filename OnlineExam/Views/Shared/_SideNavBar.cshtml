@@ -1,0 +1,220 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="profile">
+            <h3>Hello @User.Identity?.Name</h3>
+        </div>
+        <ul class="list-items">
+            <li>
+                <a class="active" asp-area="" asp-controller="Exam" asp-action="Dashboard">
+                    <span class="icon"><i class="fa fa-bars-staggered"></i></span>
+                    <span class="item">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a class="" asp-area="" asp-controller="Exam" asp-action="CreateExam">
+                    <span class="icon"><i class="fa fa-spell-check"></i></span>
+                    <span class="item">Create Exam</span>
+                </a>
+            </li>
+            <li>
+                <a class="" asp-area="" asp-controller="Exam" asp-action="Index">
+                    <span class="icon"><i class="fa fa-list-ol"></i></span>
+                    <span class="item">Exams List</span>
+                </a>
+            </li>
+            <li>
+                <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="bt1"><i class="fa fa-right-from-bracket"></i>Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+    <div class="cont">
+        @RenderBody()
+    </div>
+
+    <script>
+        const items = document.querySelectorAll('.list-items li a');
+        items.forEach(item => {
+            item.addEventListener("click", function () {
+                //e.preventDefault();
+                items.forEach(a => {
+                    a.classList.remove("active");
+                });
+                item.classList.add("active");
+            });
+        });
+        items.forEach(item => {
+            console.log(item.outerHTML);
+        });
+
+    </script>
+
+    <style>
+        @@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+        * {
+           
+            list-style: none;
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        body {
+            background: white;
+        }
+        .cont{
+            float: right;
+            width: 82%;
+            
+        }
+         .sidebar {
+            background: rgb(21, 144, 164);
+            position: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            float: left;
+            width: 18%;
+            height: 100%;
+            margin-right:12px;
+            padding: 20px 0;
+            transition: all 0.5s ease;
+        }
+
+         .sidebar .profile {
+            margin-bottom: 80px;
+            text-align: center;
+        }
+
+    /* .wrapper .sidebar .profile img {
+                display: block;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                margin: 0 auto;
+            }*/
+
+        .sidebar .profile h3 {
+            color: #ffffff;
+            margin: 10px 0 5px;
+        }
+
+        .sidebar .profile p {
+            color: rgb(206, 240, 253);
+            font-size: 14px;
+        }
+
+       .sidebar ul li a {
+            margin: 10px 0;
+            display: block;
+            padding: 13px 30px;
+            color: rgb(241, 237, 237);
+            font-size: 16px;
+            position: relative;
+        }
+
+        .sidebar ul li a .icon {
+            color: #dee4ec;
+            width: 30px;
+            display: inline-block;
+        }
+
+         .sidebar ul li a.active {
+            color: white;
+            background: #3D6F77;
+            border-left: 7px solid rgb(32, 197, 220);
+        }
+
+       .sidebar ul li a:hover {
+            color: white;
+            background: #3D6F77;
+        }
+
+        .sidebar ul li a:hover .icon,
+        .sidebar ul li a.active .icon {
+            color: white;
+        }
+
+        .wrapper .sidebar ul li a:hover:before,
+        .wrapper .sidebar ul li a.active:before {
+            display: block;
+        }
+
+
+        .bt1 {
+            position: relative;
+            display: inline-block;
+            margin: 15px;
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 18px;
+            letter-spacing: 3px;
+            text-decoration: none;
+            color: white;
+            margin-top: 225px;
+            background: transparent;
+            cursor: pointer;
+            transition: ease-out 0.5s;
+            border: none;
+            border-radius: 10px;
+            box-shadow: inset 0 0 0 0 #3D6F77;
+        }
+
+        .bt1:hover {
+            color: white;
+            box-shadow: inset 0 -100px 0 0 #3D6F77;
+        }
+
+            .bt1:active {
+            transform: scale(0.9);
+        }
+
+        a:link {
+            text-decoration: none;
+        }
+
+
+        a:visited {
+            text-decoration: none;
+        }
+
+
+        a:hover {
+            text-decoration: none;
+        }
+
+
+        a:active {
+            text-decoration: none;
+        }
+    </style>
+
+</body>
+
+</html>

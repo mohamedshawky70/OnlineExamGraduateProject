@@ -2,41 +2,172 @@
 
 @{
     ViewData["Title"] = "Questions";
+    Layout = "~/Views/Shared/SideNavBarCreateExam.cshtml";
+
 }
 
+
+<h1 class="exam-name">@Model.ExamName</h1>
 @{
-    <h1>Exam caza caza</h1>
-    foreach(var item in Model.questions)
-    {
-        <h1>@item.Head</h1>
+    int cntQuestion = 1;
+}
+@foreach(var item in Model.questions)
+{
+    <div class="question-container">
 
-        <h2>@item.a</h2>
-        <h2>@item.b</h2>
-        if (item.c != null)
-        {
-            <h2>@item.c</h2>
+        <div>
+            <p id="Question-Number">
+                Question No. @cntQuestion
+            </p>
+        </div>
 
-        }
-        if (item.d != null)
-        {
-            <h2>@item.d</h2>
-            
-        }
+        <div class="question-container-wal-marah-de-mgd">
+            <div class="question-txt-container">
+                <p>@item.Head</p>
+            </div>
 
-        <a asp-controller="Exam" asp-action="DeleteQuestion" asp-route-Id="@item.QuestionId" class="btn btn-danger">Delete</a>
-        <a asp-controller="Exam" asp-action="EditQuestion" asp-route-Id="@item.QuestionId" class="btn btn-success">Edit</a>
+            <div class="answer-container">
+                <p>A</p>
+                <div class="question-txt-container">
+                    <p>@item.a</p>
+                    @{
+                        if (item.SelectedAnswer == 1)
+                        {
+                            <span class="icon"><i class="fa fa-circle-check"> </i></span>
+                        }
+                        else
+                        {
+                             <span class="icon"><i class="fa fa-regular fa-circle"> </i></span>
+                        }
+                    }
+                </div>
+
+            </div>
+
+            <div class="answer-container">
+                <p>B</p>
+                <div class="question-txt-container">
+                    <p>@item.b</p>
+                    @{
+                        if (item.SelectedAnswer == 2)
+                        {
+                            <span class="icon"><i class="fa fa-circle-check"> </i></span>
+                        }
+                        else
+                        {
+                                <span class="icon"><i class="fa fa-regular fa-circle"> </i></span>
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="answer-container">
+                <p>C</p>
+                <div class="question-txt-container">
+                    <p>@item.c</p>
+                    @{
+                        if (item.SelectedAnswer == 3)
+                        {
+                            <span class="icon"><i class="fa fa-circle-check"> </i></span>
+                        }
+                        else
+                        {
+                            <span class="icon"><i class="fa fa-regular fa-circle"> </i></span>
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="answer-container">
+                <p>D</p>
+                <div class="question-txt-container">
+                    <p>@item.d</p>
+                    @{
+                        if (item.SelectedAnswer == 4)
+                        {
+                            <span class="icon"><i class="fa fa-circle-check"> </i></span>
+                        }
+                        else
+                        {
+                                <span class="icon"><i class="fa fa-regular fa-circle"> </i></span>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="option-container">
+
+            <a onclick="show_more_menu(event)" asp-controller="Exam" asp-action="DeleteQuestion" asp-route-Id="@item.QuestionId" class="btn btn-danger">Delete</a>
+            <a asp-controller="Exam" asp-action="EditQuestion" asp-route-Id="@item.QuestionId" class="btn btn-success">Edit</a>
+        </div>
+    </div>
+    cntQuestion++;
+}
+
+<a asp-action="Index" asp-controller="Exam" class="btn btn-secondary">
+    back to Exams
+</a>
 
 
-        <br />
-        <br />
-
+<script>
+    function show_more_menu(e) {
+        if (!confirm(`Are you sure delete this Question?`)) e.preventDefault();
+    }
+</script>
+<style>
+    .question-container {
+        padding: 16px 16px 16px 32px;
+        margin-left: 32px;
+        background: #D9D9D9;
+        border-radius: 18px;
+        margin-bottom: 24px;
+        width: 80%;
     }
 
-    <a asp-controller="Exam" asp-action="CreateQuestion" asp-route-Id="@Model.Id" class="btn btn-info">Create Question</a>
+    .question-txt-container p {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+        padding: 12px;
+    }
 
-    <a asp-action="Index" asp-controller="Exam" class="btn btn-secondary">
-        back to Exams
-    </a>
-}
+    .question-container-wal-marah-de-mgd{
+        gap: 30px;
+        display: grid;
+    }
+    .question-txt-container {
+        width: 100%;
+        background: white;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 18px;
+        align-items: center;
+        border: 1px solid;
+    }
 
 
+    .answer-container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+   .icon{
+       color:#000EE6;
+        margin-right: 16px;
+    }
+    .option-container{
+        width: 100%;
+        margin-top: 12px;
+        gap: 37px;
+        display: inline-flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    .exam-name{
+        margin-left: 32px;
+        font-size: 28px;
+        font-weight: 900;
+        margin-bottom:24px;
+    }
+</style>

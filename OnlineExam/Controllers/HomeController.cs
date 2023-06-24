@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineExam.Models;
+using OnlineExam.ViewModels;
 using System.Diagnostics;
 
 namespace OnlineExam.Controllers
@@ -15,7 +16,8 @@ namespace OnlineExam.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new StringId { Id = "" };
+            return View(model);
         }
 
         public IActionResult Privacy()

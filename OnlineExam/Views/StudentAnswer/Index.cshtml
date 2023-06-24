@@ -1,0 +1,74 @@
+﻿@model StudentInfo
+
+
+<form asp-controller="StudentAnswer" asp-action="AddAnswer" method="post">
+    <div class="container">
+        <div class="warning-container">
+            <p style="font-size: 22px;font-weight: bold;">Are you ready? there is a few of warnings.</p>
+            <ul>
+                <li>
+                    <p style="font-size: 18px;">Be sure to enter your actual ID and name.</p>
+                </li>
+                <li>
+                    <p style="font-size: 18px;">Don't open another tap during exam.</p>
+                 </li>
+                <li>
+                    <p style="font-size: 18px;">If your internet is down during exam of any kind of these 
+                    ,answers you submited so far will be submitted.</p>
+                </li>
+                <li>
+                    <p style="font-size: 18px;">You can't view the question more than 2 times.</p>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="exam-container">
+            <div class="form-group">
+                <label asp-for="NationalId"></label>
+                <input asp-for="NationalId" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" required/>
+            </div>
+
+            <input asp-for="ExamId" class="form-control hidden" value="@Model.ExamId"/>
+
+            <button type="submit" class="btn btn-primary custome-btn">Join Now</button>
+        </div>
+        
+      
+    </div>
+</form>
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        max-width: 95%;
+        margin: 56px 0px 0px 62px;
+    }
+
+    .exam-container {
+        padding: 16px 16px 16px 32px;
+        margin-left: 32px;
+        background: #D9D9D9;
+        border-radius: 18px;
+        margin-bottom: 24px;
+        width: 80%;
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .warning-container{
+        margin-top:20px;
+    }
+    
+    .custome-btn{
+        background: #1590A4;
+    }
+</style>

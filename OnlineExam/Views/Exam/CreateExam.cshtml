@@ -1,23 +1,59 @@
 ﻿@model Exam
-
+@{
+    ViewData["Title"] = "Create Exam";
+    Layout = "~/Views/Shared/_SideNavBar.cshtml";
+}
 <form method="post">
-    <div class="border p-3 mt-4">
-        <div class="row pb-2">
-            <h2 class="text-primary">
-                Add New Exam
-            </h2>
-            <hr />
-        </div>
-        <div class="mb-3">
-            <label asp-for="Title"></label>
-            <input asp-for="Title" class="form-control" />
+    <div class="container">
+        <p >Create New Exam</p>
+        <div class="exam-container">
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label asp-for="Duration"></label>
+                <input asp-for="Duration" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label asp-for="StartTime"></label>
+                <input asp-for="StartTime" class="form-control" required />
+            </div>
 
-            <label asp-for="Duration"></label>
-            <input asp-for="Duration" class="form-control" />
-        </div>
-        <button type="submit" class="btn btn-primary" >Save</button>
-        <a asp-action="Index" asp-controller="Exam" class="btn btn-secondary">
+            <button type="submit" class="btn btn-primary">Save</button>
+            @* <a asp-action="Index" asp-controller="Exam" class="btn btn-secondary">
             back to Exams
-        </a>
+            </a>*@
+        </div>
     </div>
 </form>
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        align-items: center;
+        margin-top:42px;
+        max-width: 95%;
+    }
+
+    .exam-container {
+        padding: 16px 16px 16px 32px;
+        margin-left: 32px;
+        background: #D9D9D9;
+        border-radius: 18px;
+        margin-bottom: 24px;
+        width: 80%;
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container p{
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+</style>

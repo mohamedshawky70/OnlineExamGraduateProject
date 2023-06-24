@@ -2,56 +2,66 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>@ViewData["Title"]</h1>
 
 <div class="row">
     <div class="col-md-4">
+        
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
+
+            <h2 style="margin:0px">Teacher Register</h2>
+
+            <hr style="margin:5px;">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-floating">
-                <input asp-for="Input.FirstName" class="form-control" autocomplete="FirstName" aria-required="true" maxlength="100" />
-                <label asp-for="Input.FirstName"></label>
+                <label asp-for="Input.FirstName" class="custom_label"></label>
+                <input asp-for="Input.FirstName" class="custom_input form-control" autocomplete="FirstName" aria-required="true" maxlength="100" />
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
+
             <div class="form-floating">
-                <input asp-for="Input.LastName" class="form-control" autocomplete="LastName" aria-required="true" maxlength="100" />
-                <label asp-for="Input.LastName"></label>
+                <label asp-for="Input.LastName" class="custom_label"></label>
+                <input asp-for="Input.LastName" class="custom_input form-control" autocomplete="LastName" aria-required="true" maxlength="100" />
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
+
             <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                <label asp-for="Input.Email"></label>
+                <label asp-for="Input.Email" class="custom_label"></label>
+                <input asp-for="Input.Email" class="custom_input form-control" autocomplete="username" aria-required="true" placeholder="name@domain.com" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
+
             <div class="form-floating">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.Password"></label>
+                <label asp-for="Input.Password" class="custom_label"></label>
+                
+                <input asp-for="Input.Password" class="custom_input form-control" autocomplete="new-password" aria-required="true" placeholder="at least 8 characters" />
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
+
             <div class="form-floating">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.ConfirmPassword"></label>
+                <label asp-for="Input.ConfirmPassword" class="custom_label"></label>
+                <input asp-for="Input.ConfirmPassword" class="custom_input form-control" autocomplete="new-password" aria-required="true" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button id="registerSubmit" type="submit" class="custom-btn btn-1">Register</button>
+            <div style="margin-top:4px;">
+                <p>
+                    <a style="color: #000000;" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Have an account?</a>
+                </p>
+            </div>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h3>Use another service to register.</h3>
-            <hr />
+            
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
                     <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
+                        <img src="~/images/login_img.png" class="login_custom" alt="">
                     </div>
                 }
                 else
@@ -71,6 +81,70 @@
         </section>
     </div>
 </div>
+
+<style>
+    .login_custom{
+      
+    }
+    .custom_label {
+        position:relative;
+        font-style: normal;
+        font-weight: 600;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14px; 
+        margin-bottom:0px;
+        line-height: 27px;
+        color: #000000;
+    } 
+    .custom_input {
+        height: 40px;
+        top: 8px;
+        margin-bottom: 12px;
+        width: 362px;
+        color: black;
+        border: 2px solid rgba(178, 173, 173, 0.85);
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        align-items: start;
+        border-radius: 5px;
+        padding: 10px 25px;
+        position: relative;
+        background: transparent;
+        max-width: 362px;
+    }
+
+    .custom_input:active {
+        border: 2px solid rgb(195, 200, 201);
+    }
+
+    .custom-btn {
+        width: 362px;
+        height: 40px;
+        color: #fff;
+        margin-top: 12px;
+        border-radius: 5px;
+        font-size: 16px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        outline: none;
+    }
+
+    .btn-1 {
+        background: rgba(21,144,164,1);
+        border: none;
+    }
+
+    .btn-1:hover {
+        background: rgb(24, 182, 206);
+    }
+
+</style>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

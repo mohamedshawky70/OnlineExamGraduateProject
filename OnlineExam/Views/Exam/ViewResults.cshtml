@@ -1,0 +1,29 @@
+﻿@model ResultsModel
+
+
+
+<p>@Model.ExamName</p>
+<p>@Model.answers.Count</p>
+<p>@Model.passed</p>
+<p>@Model.Failed</p>
+<p>@Model.averageGrade</p>
+
+
+
+
+
+@foreach(var i in Model.answers)
+{
+    <p>@i.StudentName</p>
+    <p>@i.StudentNationalId</p>
+    <p>@i.Score</p>
+
+    <a asp-action="ExamResultDetails" asp-controller="Exam" asp-route-id="@i.AnswerId">
+
+        more Details
+
+
+    </a>
+
+}
+
