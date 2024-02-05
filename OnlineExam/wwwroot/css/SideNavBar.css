@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+* {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    background: white;
+}
+
+.cont {
+    float: right;
+    width: 82%;
+}
+
+.sidebar {
+    background: rgb(21, 144, 164);
+    position: fixed;
+    position: fixed;
+    top: 0;
+    left: 0;
+    float: left;
+    width: 18%;
+    height: 100%;
+    margin-right: 12px;
+    padding: 20px 0;
+    transition: all 0.5s ease;
+}
+
+.sidebar .profile {
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+/* .wrapper .sidebar .profile img {
+                        display: block;
+                        width: 100px;
+                        height: 100px;
+                        border-radius: 50%;
+                        margin: 0 auto;
+                    }*/
+
+.sidebar .profile h3 {
+    color: #ffffff;
+    margin: 10px 0 5px;
+}
+
+.sidebar .profile p {
+    color: rgb(206, 240, 253);
+    font-size: 14px;
+}
+
+.sidebar ul li a {
+    margin: 10px 0;
+    display: block;
+    padding: 13px 30px;
+    color: rgb(241, 237, 237);
+    font-size: 16px;
+    position: relative;
+}
+
+.sidebar ul li a .icon {
+    color: #dee4ec;
+    width: 30px;
+    display: inline-block;
+}
+
+.sidebar ul li a.active {
+    color: white;
+    background: #3D6F77;
+    border-left: 7px solid rgb(32, 197, 220);
+}
+
+.sidebar ul li a:hover {
+    color: white;
+    background: #3D6F77;
+}
+
+.sidebar ul li a:hover .icon,
+.sidebar ul li a.active .icon {
+    color: white;
+}
+
+.wrapper .sidebar ul li a:hover:before,
+.wrapper .sidebar ul li a.active:before {
+    display: block;
+}
+
+
+.bt1 {
+    position: relative;
+    display: inline-block;
+    margin: 15px;
+    padding: 15px 30px;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 3px;
+    text-decoration: none;
+    color: white;
+    margin-top: 225px;
+    background: transparent;
+    cursor: pointer;
+    transition: ease-out 0.5s;
+    border: none;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 0 #3D6F77;
+}
+
+.bt1:hover {
+    color: white;
+    box-shadow: inset 0 -100px 0 0 #3D6F77;
+}
+
+.bt1:active {
+    transform: scale(0.9);
+}
+
+a:link {
+    text-decoration: none;
+}
+
+
+a:visited {
+    text-decoration: none;
+}
+
+
+a:hover {
+    text-decoration: none;
+}
+
+
+a:active {
+    text-decoration: none;
+}

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineExam.Data;
 using OnlineExam.Models;
+using OnlineExam.Repository.ExamRepos;
 
 namespace OnlineExam
 {
@@ -23,6 +24,8 @@ namespace OnlineExam
                 .AddDefaultTokenProviders();
 
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IExamRepo, ExamRepo>();
 
             var app = builder.Build();
 

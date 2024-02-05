@@ -1,22 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineExam.Data;
 using OnlineExam.Models;
+using OnlineExam.Repository.ExamRepos;
 using OnlineExam.ViewModels;
 using System.Security.Claims;
 
 namespace OnlineExam.Controllers
 {
+    [Authorize]
     public class ExamController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IExamRepo _examContext;
 
         // private string ConnectionString = "Server=(localdb)\\ProjectModels;Database=OnlineExam;Trusted_Connection=True;MultipleActiveResultSets=true";
-        // checkout accessability
-        public ExamController(ApplicationDbContext context)
+        public ExamController(ApplicationDbContext context, IExamRepo examContext)
         {
             _context = context;
+            this._examContext = examContext;
         }
 
+        
         public IActionResult Index()
         {
 
@@ -42,39 +47,30 @@ namespace OnlineExam.Controllers
             return View(model);
         }
 
-        //Get
+        [HttpGet]
         public IActionResult CreateExam()
         {
-
-            return View();
+            Exam exam = new Exam();
+            exam.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return View(exam);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CreateExam(Exam item)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            item.ApplicationUserId = userId;
-            DateTime a = (DateTime)item.StartTime;
-            a = a.AddMinutes(item.Duration);
-            item.EndTime = a;
-
-            _context.Exams.Add(item);
-            _context.SaveChanges();
-
-            return RedirectToAction("Index");
+            if(ModelState.IsValid)
+            {
+                _examContext.CreateExam(item);
+                return RedirectToAction("Index");
+            }
+            return View(item);
         }
 
-        public IActionResult EditExam(int? Id)
+        public IActionResult EditExam(int Id)
         {
-            if (Id == null || Id == 0)
-            {
-                return NotFound();
-            }
-
-
-
-            var item = _context.Exams.Find(Id);
+            
+            var item = _examContext.FindExam(Id);
 
             if (item == null)
             {
@@ -89,14 +85,13 @@ namespace OnlineExam.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditExam(Exam item)
         {
-            // var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //item.ApplicationUserId = userId;
+            if(ModelState.IsValid)
+            {
+                _examContext.EditExam(item.ExamId, item);
+                return RedirectToAction("Index");
+            }
 
-            _context.Exams.Update(item);
-
-            _context.SaveChanges();
-
-            return RedirectToAction("Index");
+            return View(item);
         }
 
         public IActionResult Delete(int? Id)
