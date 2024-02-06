@@ -17,8 +17,9 @@ namespace OnlineExam.Repository.ExamRepos
             this._context = context;
         }
 
-        public void CreateExam(Exam exam)
+        public void CreateExam(Exam exam, string userId)
         {
+            exam.ApplicationUserId = userId;
             DateTime a = (DateTime)exam.StartTime;
             a = a.AddMinutes(exam.Duration);
             exam.EndTime = a;
@@ -27,16 +28,11 @@ namespace OnlineExam.Repository.ExamRepos
             _context.SaveChanges();
         }
 
-        public void EditExam(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void EditExam(int id, Exam exam)
         {
             var oldExam = FindExam(id);
-            exam.Title = oldExam.Title;
-            exam.Duration = oldExam.Duration;
+            oldExam.Title = exam.Title;
+            oldExam.Duration = exam.Duration;
             _context.SaveChanges();
         }
 
@@ -46,9 +42,31 @@ namespace OnlineExam.Repository.ExamRepos
             return exam;
         }
 
-        public ExamListAndNumQuestoins TeacherwithExams()
+        public List<ExamListAndNumQuestoins> GetAllExams(string userId)
         {
-            throw new NotImplementedException();
+            List<ExamListAndNumQuestoins> examlist = new List<ExamListAndNumQuestoins>();
+            var exams = _context.Exams.Where(X => X.ApplicationUserId == userId).ToList();
+            foreach (var exam in exams)
+            {
+                var questions = _context.Questions.Where(X => X.ExamId == exam.ExamId).ToList();
+                examlist.Add(new ExamListAndNumQuestoins() { Exam = exam, Questions = questions });
+            }
+            return examlist;
+        }
+
+        public void RemoveExam(int examId)
+        {
+            var exam = FindExam(examId);
+            if (exam is not null)
+            {
+                var questions = _context.Questions.Where(X => X.ExamId == examId).ToList();
+                foreach (var q in questions)
+                {
+                    _context.Questions.Remove(q);
+                }
+                _context.Exams.Remove(exam);
+                _context.SaveChanges();
+            }
         }
     }
 }

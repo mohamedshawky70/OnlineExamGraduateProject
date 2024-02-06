@@ -21,55 +21,35 @@ namespace OnlineExam.Controllers
             this._examContext = examContext;
         }
 
-        
+
         public IActionResult Index()
         {
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            List<Exam> exams = _context.Exams.Where(i => i.ApplicationUserId == userId).ToList();
-
-            ExamListAndNumQuestoins model = new ExamListAndNumQuestoins();
-
-            model.exams = exams;
-            model.numOfQuestions = new List<int>();
-            model.EndTime = new List<DateTime>();
-
-            foreach(var i in exams)
-            {
-                int cnt = _context.Questions.Where(x=> x.ExamId == i.ExamId).Count();
-
-                model.numOfQuestions.Add(cnt);
-                model.EndTime.Add((DateTime)i.EndTime);
-            }
+            var Examlist = _examContext.GetAllExams(userId);
 
 
-            return View(model);
+            return View(Examlist);
         }
 
         [HttpGet]
         public IActionResult CreateExam()
         {
-            Exam exam = new Exam();
-            exam.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return View(exam);
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CreateExam(Exam item)
         {
-            if(ModelState.IsValid)
-            {
-                _examContext.CreateExam(item);
-                return RedirectToAction("Index");
-            }
-            return View(item);
+            _examContext.CreateExam(item, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return RedirectToAction("Index");
         }
 
         public IActionResult EditExam(int Id)
         {
-            
+
             var item = _examContext.FindExam(Id);
 
             if (item == null)
@@ -85,63 +65,18 @@ namespace OnlineExam.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditExam(Exam item)
         {
-            if(ModelState.IsValid)
-            {
-                _examContext.EditExam(item.ExamId, item);
-                return RedirectToAction("Index");
-            }
-
-            return View(item);
+            _examContext.EditExam(item.ExamId, item);
+            return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(int? Id)
+        public IActionResult Delete(int Id)
         {
-            if (Id == null || Id == 0)
+            if (Id == 0)
             {
                 return NotFound();
             }
 
-
-            var item = _context.Exams.Find(Id);
-
-            if (item != null)
-            {
-                var examId = (int)Id;
-                List<Question> questionsRelated = _context.Questions.Where(i => i.ExamId == examId).ToList();
-                _context.Questions.RemoveRange(questionsRelated);
-
-                _context.Exams.Remove(item);
-                _context.SaveChanges();
-            }
-
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteItem(int? id)
-        {
-            // var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //item.ApplicationUserId = userId;
-
-            var item = _context.Exams.Find(id);
-
-            if (item != null)
-            {
-                var examId = (int)id;
-                List<Question> questionsRelated = _context.Questions.Where(i => i.ExamId == examId).ToList();
-                _context.Questions.RemoveRange(questionsRelated);
-
-                //foreach(var question in questionsRelated)
-                //{
-                //    _context.Questions.Remove(question);
-                //}
-
-
-                _context.Exams.Remove(item);
-
-                _context.SaveChanges();
-            }
+            _examContext.RemoveExam(Id);
 
             return RedirectToAction("Index");
         }
@@ -252,7 +187,7 @@ namespace OnlineExam.Controllers
         {
             List<DashboardViewModel> model = new List<DashboardViewModel>();
 
-            foreach(var i in _context.Answers)
+            foreach (var i in _context.Answers)
             {
                 DashboardViewModel item = new DashboardViewModel
                 {
@@ -264,7 +199,7 @@ namespace OnlineExam.Controllers
                 };
 
                 model.Add(item);
-                
+
             }
 
 
@@ -310,8 +245,8 @@ namespace OnlineExam.Controllers
             model.numberOfPassedStudent = numOfSucceeded;
             model.numberOfFailedStudent = total - numOfSucceeded;
             total = Math.Max(total, 1);
-             model.averageGrade = sumOfScores / total;
-   
+            model.averageGrade = sumOfScores / total;
+
             return View(model);
         }
         public string GetLetterGrade(int totalScore, int totalQuestions)
@@ -370,7 +305,7 @@ namespace OnlineExam.Controllers
 
             return letterGrade;
         }
-        public IActionResult ExamResultDetails(int ?id)
+        public IActionResult ExamResultDetails(int? id)
         {
             if (id == null || id == 0)
             {
@@ -390,9 +325,9 @@ namespace OnlineExam.Controllers
 
             int score = 0;
 
-            foreach(var i in model.lstOfQuestionAnswers)
+            foreach (var i in model.lstOfQuestionAnswers)
             {
-                if(i.TrueAnswer == i.SelectedAnswer)
+                if (i.TrueAnswer == i.SelectedAnswer)
                     score++;
 
 
@@ -402,7 +337,7 @@ namespace OnlineExam.Controllers
 
             if (score * 2 >= model.numOfQuestions)
                 model.passed = true;
-           
+
 
 
 

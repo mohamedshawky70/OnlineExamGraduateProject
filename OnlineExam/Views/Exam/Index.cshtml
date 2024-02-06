@@ -1,4 +1,4 @@
-﻿@model ExamListAndNumQuestoins
+﻿@model List<ExamListAndNumQuestoins>
 @{
 
     Layout = "~/Views/Shared/_SideNavBar.cshtml";
@@ -17,28 +17,25 @@
     </div>
     <div class="items">
         <ul class="listOfItem">
-            @{
-                int curIdx = 0;
-            }
-            @foreach (var x in @Model.exams)
+            @foreach (var x in @Model)
             {
-                var numberOfQuestions = Model.numOfQuestions[curIdx];
-                DateTime EndTime = Model.EndTime[curIdx];
+                var numberOfQuestions = x.Questions.Count();
+                DateTime EndTime = (DateTime)x.Exam.EndTime;
                 DateTime CurTime = DateTime.Now;
                 string ActionName = EndTime > CurTime ? "ViewQuestions" : "ViewResults";
-                var ExamId = @x.ExamId.ToString();
+                var ExamId = @x.Exam.ExamId.ToString();
                 <li>
-                    <a class="Examitem" asp-controller="Exam" asp-action="@ActionName" asp-route-Id="@x.ExamId">
-                        <p>@x.Title</p>
+                    <a class="Examitem" asp-controller="Exam" asp-action="@ActionName" asp-route-Id="@x.Exam.ExamId">
+                        <p>@x.Exam.Title</p>
 
                         <p>
                             @numberOfQuestions
                         </p>
 
-                        <p>@x.StartTime</p>
+                        <p>@x.Exam.StartTime</p>
                         <p id="@ExamId"></p> <!-- Remove the script block here -->
                     </a>
-                    <a onclick="show_more_menu(event)" asp-controller="Exam" asp-action="Delete" asp-route-id="@x.ExamId"
+                    <a onclick="show_more_menu(event)" asp-controller="Exam" asp-action="Delete" asp-route-id="@x.Exam.ExamId"
                         class="btn btn-danger ">
                         <span class="icon"><i class="fa fa-trash"></i></span>
                         <script>
@@ -52,7 +49,7 @@
                 <!-- Add a separate script block to generate the countdown timer for each exam -->
                 <script>
                     var x = setInterval(function () {
-                        var countDownDate = new Date('@x.StartTime.ToString()').getTime(); // Move this line here
+                        var countDownDate = new Date('@x.Exam.StartTime.ToString()').getTime(); // Move this line here
                         var now = new Date().getTime();
                         var distance = countDownDate - now;
                         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -67,7 +64,6 @@
                     }, 1000);
                     @* console.log(@curIdx); *@
                 </script>
-                curIdx++;
             }
         </ul>
     </div>

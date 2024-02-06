@@ -9,10 +9,10 @@ namespace OnlineExam.Repository.ExamRepos
 {
     public interface IExamRepo
     {
-        ExamListAndNumQuestoins TeacherwithExams();
-        void CreateExam (Exam exam);
-        void EditExam (int id);
+        List<ExamListAndNumQuestoins> GetAllExams(string userId);
+        void CreateExam (Exam exam, string userId);
         Exam FindExam(int id);
         void EditExam (int id, Exam exam);
+        void RemoveExam(int examId);
     }
 }
