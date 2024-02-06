@@ -4,8 +4,8 @@
     <div class="question-container">
         <div class="form-group">
             <label asp-for="Head" style="font-size:18px;">Question Head:</label>
-            <textarea asp-for="Head" type="text" class="form-control custome-textarea"
-                   required style="width:800px;"></textarea>
+            <textarea asp-for="Head" type="text" class="form-control custome-textarea" required
+                style="width:800px;"></textarea>
         </div>
         <div hidden>
             <label asp-for="ExamId"></label>
@@ -15,36 +15,36 @@
             <p>A</p>
             <textarea asp-for="a" type="text" class="form-control custome-textarea" required></textarea>
             <div class="form-check">
-                <input asp-for="SelectedAnswer" name="SelectedAnswer" class="form-check-input checked-answer" type="radio"
-                         value="1" required>
+                <input asp-for="SelectedAnswer" name="SelectedAnswer" class="form-check-input checked-answer"
+                    type="radio" value="1" required>
             </div>
         </div>
 
         <div class="form-group answer-container">
             <p>B</p>
-            <textarea asp-for="b" type="text" class="form-control custome-textarea"required></textarea>
+            <textarea asp-for="b" type="text" class="form-control custome-textarea" required></textarea>
             <div class="form-check">
-                <input asp-for="SelectedAnswer" name="SelectedAnswer" class="form-check-input checked-answer" type="radio"
-                         value="2" required>
+                <input asp-for="SelectedAnswer" name="SelectedAnswer" class="form-check-input checked-answer"
+                    type="radio" value="2" required>
 
             </div>
         </div>
 
         <div class="form-group answer-container">
             <p>C</p>
-            <textarea asp-for="c" type="text" class="form-control custome-textarea"required></textarea>
+            <textarea asp-for="c" type="text" class="form-control custome-textarea" required></textarea>
             <div class="form-check">
-                <input asp-for="SelectedAnswer" name="SelectedAnswer"  class="form-check-input checked-answer" type="radio"
-                       value="3" required>
-            </div>  
+                <input asp-for="SelectedAnswer" name="SelectedAnswer" class="form-check-input checked-answer"
+                    type="radio" value="3" required>
+            </div>
         </div>
 
         <div class="form-group answer-container">
             <p>D</p>
             <textarea asp-for="d" type="text" class="form-control custome-textarea" required></textarea>
             <div class="form-check">
-                <input asp-for="SelectedAnswer" name="SelectedAnswer" class="form-check-input checked-answer" type="radio"
-                       value="4" required>
+                <input asp-for="SelectedAnswer" name="SelectedAnswer" class="form-check-input checked-answer"
+                    type="radio" value="4" required>
             </div>
         </div>
         <div class="btn-container">
@@ -53,105 +53,6 @@
     </div>
 </form>
 
-<style>
-    .question-container {
-        padding: 16px 16px 16px 32px;
-        margin-left: 32px;
-        background: #D9D9D9;
-        border-radius: 18px;
-        margin-bottom: 24px;
-        width: fit-content;
-    }
-
-    .custome-form {
-        gap: 14px;
-        display: grid;
-    }
-
-    .custome-textarea {
-        border: 1px solid black;
-        border-radius: 8px;
-        width: 761px;
-        min-width: 96px;
-        font-size: 16px;
-        font-weight: 500;
-        min-height: 26px;
-    }
-
-    .answer-container p {
-        font-weight: 600;
-        font-size: 16px;
-        margin: 0;
-    }
-
-    .answer-container {
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 8px;
-        align-items: center;
-    }
-
-    .checked-answer {
-        transform: scale(1.5);
-    }
-    .custome-btn{
-        width: 132px;
-    }
-    .btn-container{
-        display: flex;
-        justify-content: center;
-    }
-</style>
-@*<form method="post">
-
-
-
-    <div class="border p-3 mt-4">
-        <div class="row pb-2">
-            <h2 class="text-primary">
-                Add New Exam
-            </h2>
-            <hr />
-        </div>
-        <div class="mb-3">
-
-
-            <label asp-for="Head"></label>
-            <input asp-for="Head" class="form-control" />
-
-
-
-            <label asp-for="a"></label>
-            <input asp-for="a" class="form-control" />
-            <input asp-for="IsA" class="box-shadow" type="checkbox" />
-
-            <br />
-
-            <label asp-for="b"></label>
-            <input asp-for="b" class="form-control" />
-            <input asp-for="IsB"   type="checkbox" />
-
-            <br />
-
-            <label asp-for="c"></label>
-            <input asp-for="c" class="form-control" />
-            <input asp-for="IsC"  type="checkbox" />
-
-            <br />
-
-            <label asp-for="d"></label>
-            <input asp-for="d" class="form-control" />
-            <input asp-for="IsD" type="checkbox" />
-
-            <br />
-
-            <label asp-for="ExamId"></label>
-            <input asp-for="ExamId" class="form-control" value="@Model.ExamId"/>
-
-        </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a asp-action="ViewQuestions" asp-controller="Exam" asp-route-Id="@Model.ExamId" class="btn btn-secondary">
-            back to Questions
-        </a>
-    </div>
-</form>*@
+@section PageStyle {
+    <link rel="stylesheet" href="~/css/ExamCreateQuestion.css">
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OnlineExam.Data;
+using OnlineExam.Models;
 using OnlineExam.ViewModels;
 
 namespace OnlineExam.Repository.QuestionsRepo
@@ -14,6 +15,36 @@ namespace OnlineExam.Repository.QuestionsRepo
         {
             this._context = context;
         }
+
+        public void CreateQuestion(Question question)
+        {
+            _context.Add(question);
+            _context.SaveChanges();
+        }
+
+        public void DeleteQuestion(int Id)
+        {
+            var question = _context.Questions.FirstOrDefault(Q => Q.QuestionId == Id);
+            if(question is not null)
+            {
+                _context.Questions.Remove(question);
+                _context.SaveChanges();
+            }
+        }
+
+        public void EditQuestion(Question question)
+        {
+            _context.Questions.Update(question);
+
+            _context.SaveChanges();
+        }
+
+        public Question FindQuestion(int Id)
+        {
+            var question = _context.Questions.FirstOrDefault(Q => Q.QuestionId == Id);
+            return question;
+        }
+
         public ListOfQAndExamId listexq(int examId)
         {
             var examwithquestions = new ListOfQAndExamId();

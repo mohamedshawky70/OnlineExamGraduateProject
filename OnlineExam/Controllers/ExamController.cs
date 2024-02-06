@@ -15,8 +15,6 @@ namespace OnlineExam.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IExamRepo _examContext;
         private readonly IQuestionRepo _questionContext;
-
-        // private string ConnectionString = "Server=(localdb)\\ProjectModels;Database=OnlineExam;Trusted_Connection=True;MultipleActiveResultSets=true";
         public ExamController(ApplicationDbContext context, IExamRepo examContext, IQuestionRepo questionContext)
         {
             _context = context;
@@ -118,65 +116,45 @@ namespace OnlineExam.Controllers
         public IActionResult CreateQuestion(Question item)
         {
 
-            int? id = item.ExamId;
+            int id = item.ExamId;
 
-            _context.Questions.Add(item);
-            _context.SaveChanges();
+            _questionContext.CreateQuestion(item);
 
             return RedirectToAction("ViewQuestions", new { Id = id });
         }
 
-        //[HttpPost]
-        public IActionResult DeleteQuestion(int? Id)
+        [HttpGet]
+        public IActionResult DeleteQuestion(int Id)
         {
-            if (Id == null || Id == 0)
-            {
-                return NotFound();
-            }
 
-            var item = _context.Questions.Find(Id);
+            var question = _questionContext.FindQuestion(Id);
 
-            int? id = item.ExamId;
+            int id = question.ExamId;
 
-            _context.Questions.Remove(item);
-            _context.SaveChanges();
-
+            _questionContext.DeleteQuestion(Id);
 
             return RedirectToAction("ViewQuestions", new { Id = id });
         }
 
 
 
-        public IActionResult EditQuestion(int? Id)
+        public IActionResult EditQuestion(int Id)
         {
-            if (Id == null || Id == 0)
+            var question = _questionContext.FindQuestion(Id);
+
+            if (question == null)
             {
                 return NotFound();
             }
 
-
-            var item = _context.Questions.Find(Id);
-
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-
-            return View(item);
+            return View(question);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult EditQuestion(Question item)
         {
-            // var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //item.ApplicationUserId = userId;
-
-            _context.Questions.Update(item);
-
-            _context.SaveChanges();
-
+            _questionContext.EditQuestion(item);
             return RedirectToAction("ViewQuestions", new { Id = item.ExamId });
         }
 
