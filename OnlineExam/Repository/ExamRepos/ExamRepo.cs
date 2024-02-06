@@ -54,7 +54,7 @@ namespace OnlineExam.Repository.ExamRepos
             return examlist;
         }
 
-        public void RemoveExam(int examId)
+        public bool RemoveExam(int examId)
         {
             var exam = FindExam(examId);
             if (exam is not null)
@@ -66,7 +66,9 @@ namespace OnlineExam.Repository.ExamRepos
                 }
                 _context.Exams.Remove(exam);
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
     }
 }

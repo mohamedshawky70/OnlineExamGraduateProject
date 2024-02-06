@@ -13,6 +13,6 @@ namespace OnlineExam.Repository.ExamRepos
         void CreateExam (Exam exam, string userId);
         Exam FindExam(int id);
         void EditExam (int id, Exam exam);
-        void RemoveExam(int examId);
+        bool RemoveExam(int examId);
     }
 }

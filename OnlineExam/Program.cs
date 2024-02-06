@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OnlineExam.Data;
 using OnlineExam.Models;
+using OnlineExam.Repository.DashboardRepo;
 using OnlineExam.Repository.ExamRepos;
 using OnlineExam.Repository.QuestionsRepo;
 
@@ -28,6 +29,7 @@ namespace OnlineExam
 
             builder.Services.AddScoped<IExamRepo, ExamRepo>();
             builder.Services.AddScoped<IQuestionRepo, QuestionRepo>();
+            builder.Services.AddScoped<IDashboardRepo, DashboardRepo>();
 
             var app = builder.Build();
 
