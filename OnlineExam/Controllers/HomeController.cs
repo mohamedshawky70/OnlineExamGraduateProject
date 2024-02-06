@@ -23,8 +23,8 @@ namespace OnlineExam.Controllers
             {
                 return RedirectToAction("Dashboard", "Exam"); // redirect to ExamController if logged in
             }
-            var model = new StringId { Id = "" };
-            return View(model);
+            // var model = new StringId { Id = "" };
+            return View();
         }
 
         public IActionResult Privacy()

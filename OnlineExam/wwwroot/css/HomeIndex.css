@@ -1,0 +1,160 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.mo {
+    width: 300px;
+}
+.mo h2 {
+    position: absolute;
+    width: 325px;
+    height: 50px;
+    left: 90px;
+    top: 172px;
+    font-family: 'Jua';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 50px;
+    color: #000000;
+}
+
+.mo p {
+    position: absolute;
+    width: 300px;
+    height: 120px;
+    left: 90px;
+    top: 242px;
+    font-family: 'Jua';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 40px;
+    color: rgba(22, 22, 22, 0.85);
+}
+
+.custom-btn {
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    top: 328px;
+    border-radius: 5px;
+    font-size: 16px;
+    left :-24px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+}
+
+.btn-1 {
+    background: rgba(21,144,164,1);
+    border: none;
+}
+
+.btn-1:hover {
+    background: rgb(24, 182, 206);
+}
+
+.custom_input {
+    height: 40px;
+    top: 288px;
+    left: 146px;
+    color: black;
+    border: 2px solid rgb(24, 182, 206);
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    align-items:start;
+    border-radius: 5px;
+    padding: 10px 25px;
+    position: relative;
+    background: transparent;
+    max-width: 190px;
+}
+
+.custom_input:active {
+    border: 2px solid rgba(22, 22, 22, 0.85);
+}
+
+
+img {
+    position: absolute;
+    left: 830px;
+    top: 110px;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    height: 40px;
+    width: 100%;
+    min-width: 200px;
+    max-width: 250px;
+    background-color: #fff;
+    top: 288px;
+    left: 146px;
+    border-radius: 8px;
+    box-shadow: 20px 20px 30px rgba(0, 0, 0, .05);
+}
+
+.input-container input {
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid rgb(176 190 197);
+    background-color: transparent;
+    padding: 0.625rem 70px 0.625rem 0.75rem;
+    font-size: 16px;
+    line-height: 1.25rem;
+    font-weight: 400;
+    color: rgb(69 90 100);
+    outline: none;
+    transition: all .15s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        
+}
+
+.input-container input:focus {
+    border: 2px solid rgb(24, 182, 206);
+}
+
+.invite-btn {
+    position: absolute;
+    width: 65px;
+    right: 4px;
+    top: 4px;
+    bottom: 4px;
+    z-index: 10;
+    border-radius: 4px;
+    background-color: rgba(21,144,164,1);
+    color: #fff;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: none;
+    transition: .6s ease;
+}
+
+.invite-btn:hover {
+    right: 2px;
+    top: 2px;
+    bottom: 2px;
+    border-radius: 8px;
+}
+
+.input-container input:placeholder-shown ~ .invite-btn {
+    pointer-events: none;
+    background-color: gray;
+    opacity: 0.5;
+}
