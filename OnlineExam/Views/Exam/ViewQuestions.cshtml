@@ -11,7 +11,7 @@
 @{
     int cntQuestion = 1;
 }
-@foreach(var item in Model.questions)
+@foreach (var item in Model.questions)
 {
     <div class="question-container">
 
@@ -37,7 +37,7 @@
                         }
                         else
                         {
-                             <span class="icon"><i class="fa fa-regular fa-circle"> </i></span>
+                            <span class="icon"><i class="fa fa-regular fa-circle"> </i></span>
                         }
                     }
                 </div>
@@ -55,7 +55,7 @@
                         }
                         else
                         {
-                                <span class="icon"><i class="fa fa-regular fa-circle"> </i></span>
+                            <span class="icon"><i class="fa fa-regular fa-circle"> </i></span>
                         }
                     }
                 </div>
@@ -89,7 +89,7 @@
                         }
                         else
                         {
-                                <span class="icon"><i class="fa fa-regular fa-circle"> </i></span>
+                            <span class="icon"><i class="fa fa-regular fa-circle"> </i></span>
                         }
                     }
                 </div>
@@ -97,8 +97,10 @@
         </div>
         <div class="option-container">
 
-            <a onclick="show_more_menu(event)" asp-controller="Exam" asp-action="DeleteQuestion" asp-route-Id="@item.QuestionId" class="btn btn-danger">Delete</a>
-            <a asp-controller="Exam" asp-action="EditQuestion" asp-route-Id="@item.QuestionId" class="btn btn-success">Edit</a>
+            <a onclick="show_more_menu(event)" asp-controller="Exam" asp-action="DeleteQuestion"
+                asp-route-Id="@item.QuestionId" class="btn btn-danger">Delete</a>
+            <a asp-controller="Exam" asp-action="EditQuestion" asp-route-Id="@item.QuestionId"
+                class="btn btn-success">Edit</a>
         </div>
     </div>
     cntQuestion++;
@@ -114,60 +116,8 @@
         if (!confirm(`Are you sure delete this Question?`)) e.preventDefault();
     }
 </script>
-<style>
-    .question-container {
-        padding: 16px 16px 16px 32px;
-        margin-left: 32px;
-        background: #D9D9D9;
-        border-radius: 18px;
-        margin-bottom: 24px;
-        width: 80%;
-    }
-
-    .question-txt-container p {
-        font-size: 16px;
-        font-weight: 600;
-        margin: 0;
-        padding: 12px;
-    }
-
-    .question-container-wal-marah-de-mgd{
-        gap: 30px;
-        display: grid;
-    }
-    .question-txt-container {
-        width: 100%;
-        background: white;
-        display: flex;
-        justify-content: space-between;
-        border-radius: 18px;
-        align-items: center;
-        border: 1px solid;
-    }
 
 
-    .answer-container {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-   .icon{
-       color:#000EE6;
-        margin-right: 16px;
-    }
-    .option-container{
-        width: 100%;
-        margin-top: 12px;
-        gap: 37px;
-        display: inline-flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-    .exam-name{
-        margin-left: 32px;
-        font-size: 28px;
-        font-weight: 900;
-        margin-bottom:24px;
-    }
-</style>
+@section PageStyle {
+    <link rel="stylesheet" href="~/css/ExamViewQuestions.css">
+}

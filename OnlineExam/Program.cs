@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlineExam.Data;
 using OnlineExam.Models;
 using OnlineExam.Repository.ExamRepos;
+using OnlineExam.Repository.QuestionsRepo;
 
 namespace OnlineExam
 {
@@ -26,6 +27,7 @@ namespace OnlineExam
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped<IExamRepo, ExamRepo>();
+            builder.Services.AddScoped<IQuestionRepo, QuestionRepo>();
 
             var app = builder.Build();
 

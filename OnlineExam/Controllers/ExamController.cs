@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineExam.Data;
 using OnlineExam.Models;
 using OnlineExam.Repository.ExamRepos;
+using OnlineExam.Repository.QuestionsRepo;
 using OnlineExam.ViewModels;
 using System.Security.Claims;
 
@@ -13,12 +14,14 @@ namespace OnlineExam.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IExamRepo _examContext;
+        private readonly IQuestionRepo _questionContext;
 
         // private string ConnectionString = "Server=(localdb)\\ProjectModels;Database=OnlineExam;Trusted_Connection=True;MultipleActiveResultSets=true";
-        public ExamController(ApplicationDbContext context, IExamRepo examContext)
+        public ExamController(ApplicationDbContext context, IExamRepo examContext, IQuestionRepo questionContext)
         {
             _context = context;
             this._examContext = examContext;
+            this._questionContext = questionContext;
         }
 
 
@@ -81,38 +84,33 @@ namespace OnlineExam.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult ViewQuestions(int? Id)
+        [HttpGet]
+        public IActionResult ViewQuestions(int Id)
         {
-            if (Id == null || Id == 0)
+            var exam = _examContext.FindExam(Id);
+            if(exam is not null)
             {
-                return NotFound();
+                var examwithquestions = _questionContext.listexq(Id);
+                return View(examwithquestions);
             }
 
-
-            var lstOfQuestions = _context.Questions.Where(x => x.ExamId == Id).ToList();
-
-            ListOfQAndExamId viewM = new ListOfQAndExamId();
-            viewM.StartTime = _context.Exams.Where(i => i.ExamId == Id).ToArray()[0].StartTime;
-            viewM.questions = lstOfQuestions;
-            viewM.Id = (int)Id;
-            viewM.ExamName = _context.Exams.Where(i => i.ExamId == Id).ToArray()[0].Title;
-
-            return View(viewM);
+            return NotFound();
         }
 
-        public IActionResult CreateQuestion(int? Id)
+        [HttpGet]
+        public IActionResult CreateQuestion(int Id)
         {
-            if (Id == null || Id == 0)
+            var question = new Question();
+
+            var exam = _examContext.FindExam(Id);
+
+            if(exam is null)
             {
                 return NotFound();
             }
 
-            var q = new Question();
-
-            q.ExamId = (int)Id;
-
-
-            return View(q);
+            question.ExamId = Id;
+            return View(question);
         }
 
         [HttpPost]
