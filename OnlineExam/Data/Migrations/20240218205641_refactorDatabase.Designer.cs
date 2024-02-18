@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineExam.Data;
 
@@ -11,9 +12,10 @@ using OnlineExam.Data;
 namespace OnlineExam.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240218205641_refactorDatabase")]
+    partial class refactorDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -388,31 +390,6 @@ namespace OnlineExam.Data.Migrations
                     b.HasIndex("ExamId");
 
                     b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("OnlineExam.Models.StudentAnswerIndex", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int>("AnswerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuestionIndex")
-                        .HasColumnType("int");
-
-                    b.Property<byte>("SelectedAnswer")
-                        .HasColumnType("tinyint");
-
-                    b.Property<byte>("TrueAnswer")
-                        .HasColumnType("tinyint");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("StudentAnswerIndexs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
