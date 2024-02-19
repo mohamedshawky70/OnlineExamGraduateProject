@@ -149,7 +149,7 @@ namespace OnlineExam.Controllers
             var check = _studentRepo.CheckExistenceAnswer(AnswerId);
             if (check == false)
                 return NotFound();
-            
+
             int Score = _studentRepo.GetScoreAfterSubmission(AnswerId);
             return View(Score);
         }
