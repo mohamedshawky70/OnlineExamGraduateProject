@@ -123,22 +123,18 @@ style="height:100%" id="exam-form">
 </form>
 
 <script>
-    // Add click event handler to radio buttons
     $('.custome-radio').on('click', function () {
-        // Get the selected answer value
         var selectedAnswer = $(this).val();
 
-        // Send AJAX request to calculate result
         $.ajax({
-            url: '/StudentAnswer/CalculateResult',  // Replace with your actual controller action URL
+            url: '/StudentAnswer/CalculateResult',
             method: 'POST',
             data: {
                 answerId: @Model.question.AnswerId,
                 selectedChoice: selectedAnswer,
-                questionIndex: @Model.question.Index // Pass the question index to identify the question
+                questionIndex: @Model.question.Index
             },
             success: function (result) {
-                // Handle the result if needed
                 console.log(result);
             },
             error: function (error) {
