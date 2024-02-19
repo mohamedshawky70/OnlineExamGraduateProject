@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Linq;
 using System.Threading.Tasks;
 using OnlineExam.Data;
@@ -57,10 +58,37 @@ namespace OnlineExam.Repository.StudentAnswerRepo
             return answer;
         }
 
+        public bool CheckExistenceAnswer(int AnswerId)
+        {
+            var answer = _context.Answers.FirstOrDefault(x => x.AnswerId == AnswerId);
+            if (answer is null)
+                return false;
+
+            return true;
+        }
+
         public Answer GetAnswer(string nationalId, int ExamId)
         {
             var answer = _context.Answers.FirstOrDefault(a => a.StudentNationalId == nationalId && a.ExamId == ExamId);
             return answer;
+        }
+
+        public Answer GetAnswer(int AnswerId)
+        {
+            var answer = _context.Answers.FirstOrDefault(a => a.AnswerId == AnswerId);
+            return answer;
+        }
+
+        public AnswerQuestion GetAnswerQuestion(int index, int AnswerId)
+        {
+            var answerQuestion = _context.AnswerQuestions.FirstOrDefault(a => a.Index == index && a.AnswerId == AnswerId);
+            return answerQuestion;
+        }
+
+        public List<AnswerQuestion> GetAnswerQuestions(int AnswerId)
+        {
+            var answerQuestions = _context.AnswerQuestions.Where(a => a.AnswerId == AnswerId).ToList();
+            return answerQuestions;
         }
 
         public Exam GetExam(int id)
@@ -75,10 +103,57 @@ namespace OnlineExam.Repository.StudentAnswerRepo
             return questions;
         }
 
+        public int GetScoreAfterSubmission(int AnswerId)
+        {
+            var ans = GetAnswer(AnswerId);
+            var answers = _context.StudentAnswerIndexs.Where(x => x.AnswerId == AnswerId && x.SelectedAnswer == x.TrueAnswer).ToList();
+            ans.Score = answers.Count();
+            ans.isSubmitted = true;
+            _context.SaveChanges();
+            return (int)ans.Score;
+        }
+
         public Answer GetStudentAnswer(string NationalId)
         {
             var studentAsnwer = _context.Answers.FirstOrDefault(A => A.StudentNationalId == NationalId);
             return studentAsnwer;
+        }
+
+        public StudentAnswerIndex GetStudentAnswerIndex(int AnswerId, int Index)
+        {
+            var studentAsnwerIndex = _context.StudentAnswerIndexs.FirstOrDefault(a => a.AnswerId == AnswerId && a.QuestionIndex == Index);
+            return studentAsnwerIndex;
+        }
+
+        public void InsertOrUpdateStudentAnswerIndex(StudentAnswerIndex studentAsnwerIndex, int AnswerId, int Index, byte selectedAnswer, byte trueAnswer)
+        {
+            if (studentAsnwerIndex is null)
+            {
+                studentAsnwerIndex = new StudentAnswerIndex()
+                {
+                    AnswerId = AnswerId,
+                    QuestionIndex = Index,
+                    SelectedAnswer = selectedAnswer,
+                    TrueAnswer = trueAnswer
+                };
+                _context.StudentAnswerIndexs.Add(studentAsnwerIndex);
+            }
+            else studentAsnwerIndex.SelectedAnswer = selectedAnswer;
+            _context.SaveChanges();
+        }
+
+        public void UpdateAnswerQuestion(AnswerQuestion question, byte selectedOption)
+        {
+            question.SelectedAnswer = selectedOption;
+            _context.SaveChanges();
+        }
+
+        public void UpdateScore(int AnswerId)
+        {
+            var answer = GetAnswer(AnswerId);
+            var answers = _context.StudentAnswerIndexs.Where(x => x.AnswerId == AnswerId && x.SelectedAnswer == x.TrueAnswer).ToList();
+            answer.Score = answers.Count();
+            _context.SaveChanges();
         }
     }
 }

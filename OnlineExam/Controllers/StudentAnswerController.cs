@@ -44,7 +44,7 @@ namespace OnlineExam.Controllers
                 answerID = checkStudent.AnswerId;
                 if (checkStudent.isSubmitted == true)
                 {
-                    return NotFound("You Submitted Your Exam :("); 
+                    return RedirectToAction("Submit", new { AnswerId = checkStudent.AnswerId });
                 }
             }
             else
@@ -66,17 +66,19 @@ namespace OnlineExam.Controllers
         [HttpGet]
         public IActionResult StudentExam(IndexAndAnswerId indexx)
         {
-            var question = _context.AnswerQuestions.FirstOrDefault(item => item.Index == indexx.Index && item.AnswerId == indexx.AnswerId);
+            var question = _studentRepo.GetAnswerQuestion(indexx.Index, indexx.AnswerId);
+
             if (question == null)
-            {
                 return RedirectToAction(nameof(Submit), new { AnswerId = indexx.AnswerId });
-            }
 
-            int NumOfQuestions = _context.AnswerQuestions.Where(i => i.AnswerId == indexx.AnswerId).Count();
+            int NumOfQuestions = _studentRepo.GetAnswerQuestions(indexx.AnswerId).Count();
 
-            int ExamId = _context.Answers.Where(i => i.AnswerId == indexx.AnswerId).ToArray()[0].ExamId;
-            var ExamName = _context.Exams.FirstOrDefault(i => i.ExamId == ExamId).Title;
-            DateTime ExamDate = (DateTime)_context.Exams.FirstOrDefault(i => i.ExamId == ExamId).EndTime;
+            var answer = _studentRepo.GetAnswer(indexx.AnswerId);
+
+            int ExamId = answer.ExamId;
+            var exam = _studentRepo.GetExam(ExamId);
+            var ExamName = exam.Title;
+            DateTime ExamDate = (DateTime)exam.EndTime;
 
             ExamInformation model = new ExamInformation
             {
@@ -100,48 +102,25 @@ namespace OnlineExam.Controllers
 
             int answerId = 0;
 
-            if (int.TryParse(form["question.AnswerId"], out answerId))
-            {
-
-            }
+            if (int.TryParse(form["question.AnswerId"], out answerId)) { }
 
             int answerIndex;
 
 
             if (int.TryParse(form["question.AnswerId"], out answerIndex))
             {
-                var question = _context.AnswerQuestions.FirstOrDefault(q => q.Index == index && q.AnswerId == answerId);
+                var question = _studentRepo.GetAnswerQuestion(index, answerId);
                 if (question != null)
                 {
                     int selectedOption = 0;
                     if (int.TryParse(form["question.SelectedAnswer"], out selectedOption))
                     {
-                        if (selectedOption == null)
-                            selectedOption = 0;
-
                         if (selectedOption != 0)
                         {
-                            question.SelectedAnswer = (byte)selectedOption;
-                            var answer = _context.Answers.FirstOrDefault(a => a.AnswerId == answerId);
-                            var studentAsnwerIndex = _context.StudentAnswerIndexs.FirstOrDefault(a => a.AnswerId == answerId && a.QuestionIndex == index);
-                            if (studentAsnwerIndex is null)
-                            {
-                                studentAsnwerIndex = new StudentAnswerIndex()
-                                {
-                                    AnswerId = answerId,
-                                    QuestionIndex = index,
-                                    SelectedAnswer = question.SelectedAnswer,
-                                    TrueAnswer = question.TrueAnswer
-                                };
-                                _context.StudentAnswerIndexs.Add(studentAsnwerIndex);
-                            }
-                            else studentAsnwerIndex.SelectedAnswer = question.SelectedAnswer;
-                            _context.SaveChanges();
-                            var answers = _context.StudentAnswerIndexs.Where(x => x.AnswerId == answerId && x.SelectedAnswer == x.TrueAnswer).ToList();
-                            answer.Score = answers.Count();
-                            _context.Answers.Update(answer);
-                            _context.AnswerQuestions.Update(question);
-                            _context.SaveChanges();
+                            _studentRepo.UpdateAnswerQuestion(question, (byte)selectedOption);
+                            var studentAsnwerIndex = _studentRepo.GetStudentAnswerIndex(answerId, index);
+                            _studentRepo.InsertOrUpdateStudentAnswerIndex(studentAsnwerIndex, answerId, index, question.SelectedAnswer, question.TrueAnswer);
+                            _studentRepo.UpdateScore(answerId);
                         }
 
                     }
@@ -167,15 +146,12 @@ namespace OnlineExam.Controllers
         [HttpGet]
         public IActionResult Submit(int AnswerId)
         {
-            Answer ans = _context.Answers.FirstOrDefault(i => i.AnswerId == AnswerId);
-            if (ans is null)
+            var check = _studentRepo.CheckExistenceAnswer(AnswerId);
+            if (check == false)
                 return NotFound();
-            var answers = _context.StudentAnswerIndexs.Where(x => x.AnswerId == AnswerId && x.SelectedAnswer == x.TrueAnswer).ToList();
-            ans.Score = answers.Count();
-            ans.isSubmitted = true;
-            _context.Answers.Update(ans);
-            _context.SaveChanges();
-            return View(ans.Score);
+            
+            int Score = _studentRepo.GetScoreAfterSubmission(AnswerId);
+            return View(Score);
         }
     }
 }
