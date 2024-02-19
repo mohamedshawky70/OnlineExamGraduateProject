@@ -91,53 +91,41 @@ namespace OnlineExam.Controllers
         [HttpPost]
         public IActionResult StudentExam(IFormCollection form)
         {
-            int index;
-            if (!int.TryParse(form["question.index"], out index))
-            {
-                index = 0;
-            }
+            int index = 0, answerId = 0;
 
-            int answerId = 0;
+            if (int.TryParse(form["question.index"], out index)) { }
+            else return NotFound();
 
             if (int.TryParse(form["question.AnswerId"], out answerId)) { }
-
-            int answerIndex;
-
-
-            if (int.TryParse(form["question.AnswerId"], out answerIndex))
-            {
-                var question = _studentRepo.GetAnswerQuestion(index, answerId);
-                if (question != null)
-                {
-                    int selectedOption = 0;
-                    if (int.TryParse(form["question.SelectedAnswer"], out selectedOption))
-                    {
-                        if (selectedOption != 0)
-                        {
-                            _studentRepo.UpdateAnswerQuestion(question, (byte)selectedOption);
-                            var studentAsnwerIndex = _studentRepo.GetStudentAnswerIndex(answerId, index);
-                            _studentRepo.InsertOrUpdateStudentAnswerIndex(studentAsnwerIndex, answerId, index, question.SelectedAnswer, question.TrueAnswer);
-                            _studentRepo.UpdateScore(answerId);
-                        }
-
-                    }
-                }
-            }
+            else return NotFound();
 
             string action = form["action"];
             if (action == "prev")
-            {
                 index--;
-            }
             else if (action == "next")
-            {
                 index++;
-            }
             else if (action == "submit")
-            {
                 return RedirectToAction("Submit", new { AnswerId = answerId });
-            }
+
             return RedirectToAction(nameof(StudentExam), new IndexAndAnswerId { Index = index, AnswerId = answerId });
+        }
+
+        [HttpPost]
+        public JsonResult CalculateResult(int answerId, int selectedChoice, int questionIndex)
+        {
+            var question = _studentRepo.GetAnswerQuestion(questionIndex, answerId);
+            if (question != null)
+            {
+                if (selectedChoice != 0)
+                {
+                    _studentRepo.UpdateAnswerQuestion(question, (byte)selectedChoice);
+                    var studentAsnwerIndex = _studentRepo.GetStudentAnswerIndex(answerId, questionIndex);
+                    _studentRepo.InsertOrUpdateStudentAnswerIndex(studentAsnwerIndex, answerId, questionIndex, question.SelectedAnswer, question.TrueAnswer);
+                    _studentRepo.UpdateScore(answerId);
+                }
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
         }
 
         [HttpGet]

@@ -121,6 +121,33 @@ style="height:100%" id="exam-form">
 
     </div>
 </form>
+
+<script>
+    // Add click event handler to radio buttons
+    $('.custome-radio').on('click', function () {
+        // Get the selected answer value
+        var selectedAnswer = $(this).val();
+
+        // Send AJAX request to calculate result
+        $.ajax({
+            url: '/StudentAnswer/CalculateResult',  // Replace with your actual controller action URL
+            method: 'POST',
+            data: {
+                answerId: @Model.question.AnswerId,
+                selectedChoice: selectedAnswer,
+                questionIndex: @Model.question.Index // Pass the question index to identify the question
+            },
+            success: function (result) {
+                // Handle the result if needed
+                console.log(result);
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
+
 <script>
     const examForm = document.getElementById('exam-form');
 
@@ -145,7 +172,6 @@ style="height:100%" id="exam-form">
         }
     }, 1000);
 </script>
-
 
 @section PageStyle {
     <link rel="stylesheet" href="~/css/StudentAnswerStudentExam.css">
