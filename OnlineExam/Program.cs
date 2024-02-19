@@ -5,6 +5,7 @@ using OnlineExam.Models;
 using OnlineExam.Repository.DashboardRepo;
 using OnlineExam.Repository.ExamRepos;
 using OnlineExam.Repository.QuestionsRepo;
+using OnlineExam.Repository.StudentAnswerRepo;
 
 namespace OnlineExam
 {
@@ -27,6 +28,7 @@ namespace OnlineExam
 
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddScoped<IStudentRepo, StudentRepo>();
             builder.Services.AddScoped<IExamRepo, ExamRepo>();
             builder.Services.AddScoped<IQuestionRepo, QuestionRepo>();
             builder.Services.AddScoped<IDashboardRepo, DashboardRepo>();

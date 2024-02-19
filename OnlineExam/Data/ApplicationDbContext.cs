@@ -36,5 +36,6 @@ namespace OnlineExam.Data
         public DbSet<Question> Questions { set; get; }
         public DbSet<AnswerQuestion> AnswerQuestions { set; get; }
         public DbSet<Answer> Answers { set; get; }
+        public DbSet<StudentAnswerIndex> StudentAnswerIndexs { set; get; }
     }
 }

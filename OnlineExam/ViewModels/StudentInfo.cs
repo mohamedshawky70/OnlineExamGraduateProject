@@ -7,6 +7,6 @@
         public int ExamId { set; get; }
         public DateTime StartTime { set; get; }
         public DateTime EndTime { set; get; }
-
+        public bool Submit { get; set; }
     }
 }

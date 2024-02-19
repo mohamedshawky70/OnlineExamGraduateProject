@@ -15,7 +15,7 @@
     <button class="custom-btn btn-1">Make Exam</button>
 </form>
 
-<form asp-controller="StudentAnswer" asp-action="Index" method="post">
+<form asp-controller="StudentAnswer" asp-action="Index">
     <div class="input-container">
         <input asp-for="Id"  placeholder="Enter Exam ID" required="" id ="IdInput">
         <span asp-validation-for="Id" class="text-danger"></span>
