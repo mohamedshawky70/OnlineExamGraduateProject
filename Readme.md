@@ -15,8 +15,47 @@ The Student Examination Monitoring System is a web-based platform designed to si
 
 - **Frontend:** HTML, CSS, JavaScript, Bootstrap
 - **Backend:** ASP.NET MVC (or ASP.NET Core for .NET 6), C#
-- **Real-Time Communication:** SignalR
 - **Database:** SQL Server
+
+
+## Getting Started
+
+### Prerequisites
+
+- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) installed on your machine
+- `[Visual Studio / Visual Studio Code]` or any preferred code editor
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Ahmd-Naser/OnlineExamGraduateProject.git
+2. Navigate to the project folder:
+
+   ```bash
+   cd OnlineExamGraduateProject/OnlineExam
+3. Open the project in your preferred code editor.
+
+4. Configure the necessary dependencies and packages (see Dependencies section).
+
+5. Run the application:
+
+   ```bash
+   dotnet run
+## Usage
+
+1. Create a Teacher Account:
+    * Log in and create exams.
+2. Share Exam Code with Students:
+    * Share the unique exam code with your students.
+3. Students' Actions:
+    * Join the exam, and enable camera, audio, and screen sharing.
+4. Real-Time Monitoring:
+    * Monitor students in real-time.
+5. Instant Feedback:
+    * Students receive instant result after completing the exam.
+
 
 
 ## Dependencies
@@ -27,34 +66,4 @@ The Student Examination Monitoring System is a web-based platform designed to si
 - **Microsoft.EntityFrameworkCore.SqlServer (v6.0.16):** Entity Framework Core database provider for SQL Server.
 - **Microsoft.EntityFrameworkCore.Tools (v6.0.16):** Provides tools for Entity Framework Core commands.
 - **Microsoft.VisualStudio.Web.CodeGeneration.Design (v6.0.13):** Design-time support for ASP.NET Core code generation.
-
-
-## Getting Started
-
-### Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
-
-
-
-## Usage
-
-1. Create a Teacher Account:
-
-    * Log in and create exams.
-2. Share Exam Code with Students:
-
-    * Share the unique exam code with your students.
-3. Students' Actions:
-
-    * Join the exam, and enable camera, audio, and screen sharing.
-4. Real-Time Monitoring:
-
-    * Monitor students in real-time.
-5. Instant Feedback:
-
-    * Students receive instant result after completing the exam.
-
 
