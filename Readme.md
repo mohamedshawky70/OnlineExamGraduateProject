@@ -57,6 +57,43 @@ The Student Examination Monitoring System is a web-based platform designed to si
     * Students receive instant result after completing the exam.
 
 
+## Application Screenshots
+- Here are some screenshots of the application's main pages:
+
+* Home Page :
+![Home Page](Images/HomePage.png)
+
+* Registration Page :
+![Registration Page](Images/Registration.png)
+
+* Login Page :
+![Login Page](Images/Loging.png)
+
+* DashBoard Page :
+![DashBoard Page](Images/Dashboard.png)
+
+* Exam List Page :
+![Exam List Page](Images/ExamList.png)
+
+* Creating Exam Page :
+![Creating Exam Page](Images/CreatingExam.png)
+
+* Exam Settings Page :
+![Exam Settings Page](Images/ExamSettings.png)
+
+* Adding Question To Exam Page :
+![Adding Question To Exam Page](Images/AddingQuestion.png)
+
+
+
+## TO Do 
+### Here’s a list of features and improvements planned for the application:
+
+* Webcam Integration for Student Monitoring: Enable the webcam feature to allow real-time monitoring of students during exams.
+
+*  Improved User Interface: Enhance the UI for a more intuitive experience.
+
+
 
 ## Dependencies
 
